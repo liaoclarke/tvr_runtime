@@ -1,0 +1,16 @@
+{
+    "songs" : [
+        {
+            "name" : "Dangerous",
+            "artist" : "Michael Jackson"
+        }
+        {
+            "name" : "With Or Without You",
+            "artist" : "U2",
+        },
+        {
+            "name" : "Something",
+            "artist" : "Daft Punk"
+        }
+    ]
+}

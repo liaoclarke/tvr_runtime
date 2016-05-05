@@ -1,7 +1,7 @@
 #ifndef INC_Server_ConfigureServerFromFile_h
 #define INC_Server_ConfigureServerFromFile_h
 
-#include <Server/CongfigureServer.h>
+#include <Server/ConfigureServer.h>
 
 #include <iostream>
 #include <fstream>
