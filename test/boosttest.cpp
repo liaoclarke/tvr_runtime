@@ -2,6 +2,9 @@
 #include <json/reader.h>
 #include <boost/noncopyable.hpp>
 #include <iostream>
+#include <fstream>
+#include <stdexcept>
+#include <memory>
 
 class JsonData : boost::noncopyable {
     public:
@@ -18,7 +21,7 @@ class JsonData : boost::noncopyable {
         }
 
         Json::Value root;
-}
+};
 
 void printSongInfo(Json::Value song){
     std::clog<<"\n-----------printing a song-------------\n";
@@ -27,13 +30,13 @@ void printSongInfo(Json::Value song){
 }
 
 void main() {
-    std::unique_ptr<JsonData> m_data = new JsonData();
-    const sd::string m_config = "catalog.json";
-    std::out << "Loading configure file: " << m_config << std::endl;
-    m_data.parse(m_config);
+    std::unique_ptr<JsonData> m_data(new JsonData());
+    const std::string m_config = "catalog.json";
+    std::clog << "Loading configure file: " << m_config << std::endl;
+    m_data->parse(m_config);
     Json::Value const &songs = m_data->getMember("songs");
     for (auto const &song : songs.getMemberNames()) {
-    //    std::out << "song: " + << song << std::endl;
+    //    std::cout << "song: " + << song << std::endl;
         printSongInfo(song);
     }
 }

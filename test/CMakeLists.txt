@@ -5,6 +5,17 @@ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/")
 
 include(LibFindMacros)
 
+################################
+# Boost
+################################
+ADD_DEFINITIONS(-DBOOST_LOG_DYN_LINK)
+ADD_DEFINITIONS(-DBoost_USE_STATIC_LIBS=ON)
+#set_property(GLOBAL PROPERTY FIND_LIBRARY_USE_LIB64_PATHS ON)
+set(Boost_INCLUDE_DIR "C:/Boost/include/boost-1_60")
+set(Boost_LIBRARY_DIR "C:/Boost/lib")
+#INCLUDE_DIRECTORIES( ${Boost_INCLUDE_DIR} )
+#LINK_DIRECTORIES(${Boost_LIBRARY_DIR})
+
 message("----------- trying to find Jsoncpp and Boost -------------")
 find_package(JsonCpp)
 include(BoostTargets)
