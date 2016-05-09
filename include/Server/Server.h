@@ -2,13 +2,14 @@
 #define SERVER_Server_h
 namespace tvr {
     namespace server {
+        class ServerImpl;
         class Server : boost::noncopyable {
             struct private_constructor {};
 
             public:
-                Server();
+                Server(connection::ConnectionPtr const &conn, private_constructor const &);
                 ~Server();
-                static ServerPtr create(connection::ConnectionPtr const &conn);
+                static ServerPtr create();
                 void update();
                 void startAndAwaitShutDown();
                 void stop();

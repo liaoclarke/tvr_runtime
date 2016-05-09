@@ -4,18 +4,48 @@
 namespace tvr {
     namespace server {
 
-        Server::Server(connection::ConnectionPtr const &conn,
-                       boost) {
-        }
+        Server::Server(connection::ConnectionPtr const &conn, 
+                       private_constructor const &) 
+                : m_impl(new ServerImpl(conn)) {}
+
+        Server::~Server() {}
 
         ServerPtr Server::create() {
             connection::ConnectionPtr conn(connection::Connection::createConnection());
-            ServerPtr ret(std::make_shared<Server>(conn, boost::none, boost::none, private_constructor{}));
+            ServerPtr ret(std::make_shared<Server>(conn, private_constructor{}));
             return ret;
         }
 
         void Server::update() {
-            m_server->update();
+            m_impl->update();
+        }
+
+        void Server::startAndAwaitShutdown() {
+            m_impl->awaitShutdown();
+        }
+
+        void Server::stop() {
+            m_impl->stop();
+        }
+
+        void Server::signalStop() {
+            m_impl->signalStop();
+        }
+
+        void Server::setHardwareDetectOnConnection() {
+            m_impl->setHardwareDetectOnConnection();
+        }
+
+        void Server::triggerHardwareDetect() {
+            m_impl->triggerHardwareDetect();
+        }
+
+        bool Server::addString(std::string const &key, std::string const &value) {
+            return m_impl->addString(key, value);
+        }
+
+        void Server::setSleepTime(int microseconds) {
+            m_impl->setSleepTime(microseconds);
         }
     }
 }
