@@ -12,7 +12,9 @@ class JsonData : boost::noncopyable {
             Json::Reader reader;
             bool parsingSuccessful = reader.parse(json, root);
             if (!parsingSuccessful) {
-                throw std::runtime_error("Error in parsing Json: " + reader.getFormattedErrorMessages());
+            //    throw std::runtime_error("Error in parsing Json: " + reader.getFormattedErrorMessages());
+                  std::clog  << "Failed to parse configuration\n"
+                   << reader.getFormattedErrorMessages();
             }
         }
 
@@ -31,12 +33,23 @@ void printSongInfo(Json::Value song){
 
 void main() {
     std::unique_ptr<JsonData> m_data(new JsonData());
-    const std::string m_config = "catalog.json";
-    std::clog << "Loading configure file: " << m_config << std::endl;
+    std::ifstream m_config("catalog.json");
+    std::clog << "Loading configure file: catalog.json" << std::endl;
     m_data->parse(m_config);
     Json::Value const &songs = m_data->getMember("songs");
-    for (auto const &song : songs.getMemberNames()) {
-    //    std::cout << "song: " + << song << std::endl;
-        printSongInfo(song);
-    }
+	try {
+		//Json::Value::Members members = songs.getMemberNames();
+		//std::cout << "Songs number: " << songs.size() << " memory size: " << members.size() << std::endl;
+		for (int i = 0; i < songs.size(); i++) {
+		    printSongInfo(songs[i]);
+		}
+	}
+	catch (std::exception &error) {
+		std::clog << "Error: " << error.what() << std::endl;
+	}
+
+    /*for (auto const &song : songs.getMemberNames()) {
+        std::clog << "song: " << song << std::endl;
+        //printSongInfo(song);
+    }*/
 }

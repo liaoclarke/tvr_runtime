@@ -31,8 +31,8 @@ namespace tvr {
                 return nullptr;
             }
             
-            std::out << "Instantiating configured drivers..." << std::endl;
-            bool success = svrConfig.instantiateDrivers();
+            /*std::out << "Instantiating configured drivers..." << std::endl;
+            bool success = srvConfig.instantiateDrivers();
             if (!srvConfig.getSuccessfulInstantiations().empty()) {
                 std::out << "Successes:" << std::endl;
                 for (auto const &driver : srvConfig.getSuccessfulInstantiations()) {
@@ -50,7 +50,7 @@ namespace tvr {
 
             if (srvConfig.processExternalDevices()) {
                 std::out << "External devices found and parsed from config file." << std:endl;
-            }
+            }*/
 
             if (srvConfig.processDisplay()) {
                 std::out << "Display descriptor found and parsed from config file." << std::endl;

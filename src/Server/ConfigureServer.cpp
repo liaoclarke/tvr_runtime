@@ -36,18 +36,45 @@ namespace tvr {
         }
 
         ServerPtr ConfigureServer::constructServer() {
+            Json::Value const &root(m_data->root);
+            boost::optional<int> port;
+            int sleepTime = 0;
+            m_server = Server::create();
+            if (sleepTime > 0.0) {
+                m_server->setSleepTime(sleepTime);
+            }
+            m_server->setHardwareDetectOnConnection();
+            return m_server;
         }
 
         bool ConfigureServer::instantiateDrivers() {
+            return false;
         }
 
         bool ConfigureServer::processExternalDevices() {
+            return false;
         }
 
+        static const char DISPLAY_KEY[] = "display";
         bool ConfigureServer::processDisplay() {
+            bool success = false;
+            Json::Value const &display = m_data->getMember(DISPLAY_KEY);
+            if (display.isNull()) {
+                return success;
+            }
+            success = m_server->addString(DISPLAY_KEY, display.asString());
+            return success;
         }
 
+        static const char RENDERMANAGER_KEY[] = "renderManagerConfig";
         bool ConfigureServer::processRenderManagerParameters() {
+            bool success = false;
+            Json::Value const &renderManager = m_data->getMember(RENDERMANAGER_KEY);
+            if (renderManager.isNull()) {
+                return success; 
+            }
+            success = m_server->addString(RENDERMANAGER_KEY, renderManager.asString());
+            return success;
         }
     }
 }
