@@ -1,4 +1,5 @@
 #include <Server/Server.h>
+#include <Server/ServerPtr.h>
 #include <Connection/Connection.h>
 
 namespace tvr {
@@ -11,7 +12,7 @@ namespace tvr {
         Server::~Server() {}
 
         ServerPtr Server::create() {
-            connection::ConnectionPtr conn(connection::Connection::createConnection());
+            tvr::connection::ConnectionPtr conn(connection::Connection::createConnection());
             ServerPtr ret(std::make_shared<Server>(conn, private_constructor{}));
             return ret;
         }

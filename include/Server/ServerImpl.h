@@ -2,6 +2,7 @@
 #define SERVER_ServerImpl_h
 #include <Server/Server.h>
 #include <Util/SharedPtr.h>
+#include <Connection/ConnectionPtr.h>
 
 #include <boost/noncopyable.hpp>
 #include <boost/thread.hpp>
@@ -36,17 +37,23 @@ namespace tvr {
                 void m_queueTreeSend();
                 void m_sendTree();
                 bool m_inServerThead() const;
-                static int VRPN_CALLBACK m_exitIdle(void *userdata, vrpn_HANDLERPARAM);
-                static int VRPN_CALLBACK m_enterIdle(void *userdata, vrpn_HANDLERPARAM);
+                static int __stdcall m_exitIdle(void *userdata, vrpn_HANDLERPARAM);
+                static int __stdcall m_enterIdle(void *userdata, vrpn_HANDLERPARAM);
 
                 tvr::connection::ConnectionPtr m_conn;
                 tvr::common::BaseDevicePtr m_systemDevice;
+                tvr::common::SystemComponent *m_systemComponent = nullptr;
+                tvr::common::CommonComponent *m_commonComponent = nullptr;
                 tvr::common::PathTree m_tree;
+
+                mutable boost::mutex m_runControl;
+                boost::thread m_thread;
                 bool m_triggeredDetect = false;
                 bool m_running = false;
                 bool m_everStarted = false;
-                boost::thread m_thread;
+
                 boost::thread::id m_mainThreadId;
+                mutable boost::mutex m_mainThreadMutex;
                 int m_sleepTime = 0;
                 static const int IDLE_SLEEP_TIME = 1000;
                 int m_currentSleepTime = IDLE_SLEEP_TIME;
@@ -68,6 +75,18 @@ namespace tvr {
                 boost::thread::id &m_id;
                 boost::thread::id m_origID;
         };
+    }
+
+    template <typename Callable>
+    inline void ServerImpl::m_callControlled(Callable f) {
+        boost::unique_lock<boost::mutex> lock(m_runControl);        
+        if (m_running && boost::this_thread::get_id() != m_thread.get_id()) {
+            boost::unique_lock<boost::mutex> lock(m_mainThreadMutex);
+            TemporaryThreadIDChanger changer(m_mainThreadId);
+            f();
+        } else {
+            f();
+        } 
     }
 }
 
