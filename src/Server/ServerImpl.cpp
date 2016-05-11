@@ -22,10 +22,10 @@ namespace tvr {
                 throw std::runtime_error("Could not create server - there is probably another instance of the server or a VRPN server running already.");
             }
             m_systemDevice = tvr::common::createServerDevice(vrpnConn);
-            //m_systemComponent = m_systemDevice->addComponent(tvr::common::SystemComponent::create());
-            //m_systemComponent->registerUpdateHandler();
-            //m_commonComponent = m_systemDevice->addComponent(tvr::common::CommonComponent::create());
-            //m_commonComponent->registerPingHandler([&] { m_queueTreeSend(); });
+            m_systemComponent = m_systemDevice->addComponent(tvr::common::SystemComponent::create());
+            m_systemComponent->registerUpdateHandler();
+            m_commonComponent = m_systemDevice->addComponent(tvr::common::CommonComponent::create());
+            m_commonComponent->registerPingHandler([&] { m_queueTreeSend(); });
 
             vrpnConn->register_handler(vrpnConn->register_message_type(vrpn_got_first_connection), &ServerImpl::m_exitIdle, this);
             vrpnConn->register_handler(vrpnConn->register_message_type(vrpn_dropped_last_connection), &ServerImpl::m_enterIdle, this);
