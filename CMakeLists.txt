@@ -1,5 +1,5 @@
 cmake_minimum_required (VERSION 2.6)
-project (tvr_server)
+project (tvrcore)
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/test/cmake/")
 
@@ -13,10 +13,8 @@ ADD_DEFINITIONS(-DBoost_USE_STATIC_LIBS=ON)
 #set_property(GLOBAL PROPERTY FIND_LIBRARY_USE_LIB64_PATHS ON)
 set(Boost_INCLUDE_DIR "C:/Boost/include/boost-1_60")
 set(Boost_LIBRARY_DIR "C:/Boost/lib")
-#INCLUDE_DIRECTORIES( ${Boost_INCLUDE_DIR} )
-#LINK_DIRECTORIES(${Boost_LIBRARY_DIR})
 
-message("----------- trying to find Jsoncpp and Boost -------------")
+message("----------- trying to find Jsoncpp & Boost & VRPN -------------")
 find_package(JsonCpp)
 find_package(VRPN)
 include(BoostTargets)
@@ -48,8 +46,6 @@ else(VRPN_FOUND)
     message("WARNING: we couldn't find VRPN on your pc. DLC is disabled.")
 endif(VRPN_FOUND)
 
-#set(LIBS ${Jsoncpp_LIBRARY})
-
 # Set the include dir variables and the libraries and let libfind_process do the rest.
 # NOTE: Singular variables for this library, plural for libraries this this lib depends on.
 set(JsonCpp_PROCESS_INCLUDES JsonCpp_INCLUDE_DIR)
@@ -66,5 +62,3 @@ target_include_directories(boosttest PUBLIC $<BUILD_INTERFACE:${Boost_INCLUDE_DI
 target_link_libraries(test_loopback ${VRPN_LIBRARIES})
 target_link_libraries(boosttest ${JsonCpp_LIBRARY})
 target_link_libraries(boosttest ${Boost_LIBRARIES} )
-#FIND_PACKAGE( Boost 1.40 COMPONENTS program_options REQUIRED )
-

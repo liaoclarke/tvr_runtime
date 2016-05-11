@@ -41,10 +41,10 @@ namespace tvr {
                 static int __stdcall m_enterIdle(void *userdata, vrpn_HANDLERPARAM);
 
                 tvr::connection::ConnectionPtr m_conn;
-                tvr::common::BaseDevicePtr m_systemDevice;
-                tvr::common::SystemComponent *m_systemComponent = nullptr;
-                tvr::common::CommonComponent *m_commonComponent = nullptr;
-                tvr::common::PathTree m_tree;
+                //tvr::common::BaseDevicePtr m_systemDevice;
+                //tvr::common::SystemComponent *m_systemComponent = nullptr;
+                //tvr::common::CommonComponent *m_commonComponent = nullptr;
+                //tvr::common::PathTree m_tree;
 
                 mutable boost::mutex m_runControl;
                 boost::thread m_thread;

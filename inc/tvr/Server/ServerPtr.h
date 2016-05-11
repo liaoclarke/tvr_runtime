@@ -1,6 +1,6 @@
-#ifndef SERVER_ServerPtr_H
-#define SERVER_ServerPtr_H
-#include <Util/SharedPtr.h>
+#ifndef INC_Server_ServerPtr_h
+#define INC_Server_ServerPtr_h
+#include <tvr/Util/SharedPtr.h>
 
 namespace tvr {
     namespace server {

@@ -1,4 +1,5 @@
 include(GenerateExportHeader)
+include("${CMAKE_CURRENT_SOURCE_DIR}/Macros.cmake")
 add_subdirectory(Common)
 add_subdirectory(Connection)
 add_subdirectory(Server)

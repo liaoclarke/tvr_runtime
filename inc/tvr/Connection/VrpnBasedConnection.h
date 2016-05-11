@@ -1,13 +1,14 @@
-#ifndef CONNECTION_VrpnBasedConnection_H
-#define CONNECTION_VrpnBasedConnection_H
-#include <Connection/Connection.h>
-#include <Common/NetworkingSupport.h>
+#ifndef INC_Connection_VrpnBasedConnection_h
+#define INC_Connection_VrpnBasedConnection_h
+#include <tvr/Connection/Connection.h>
+#include <tvr/Common/NetworkingSupport.h>
+
 #include <vrpn_Connection.h>
 #include <vrpn_ConnectionPtr.h>
 
 namespace tvr {
     namespace connection {
-        class VrpnBasedConnection : boost::noncopyable {
+        class VrpnBasedConnection : public Connection {
             public:
                 VrpnBasedConnection();
                 virtual ~VrpnBasedConnection();

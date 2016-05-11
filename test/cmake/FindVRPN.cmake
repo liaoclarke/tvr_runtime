@@ -64,6 +64,8 @@ find_path(VRPN_INCLUDE_DIR
 	NAMES
 	vrpn_Connection.h
 	PATH_SUFFIXES
+    inc
+    inc/vrpn
 	include
 	include/vrpn
 	HINTS

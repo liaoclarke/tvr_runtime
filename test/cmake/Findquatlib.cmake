@@ -57,6 +57,7 @@ else()
 		HINTS
 		"${QUATLIB_ROOT_DIR}"
 		PATH_SUFFIXES
+        inc
 		include
 		PATHS
 		"${_progfiles}/VRPN"

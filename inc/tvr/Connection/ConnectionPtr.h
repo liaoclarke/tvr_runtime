@@ -1,6 +1,7 @@
-#ifndef CONNECTION_ConnectionPtr_H
-#define CONNECTION_ConnectionPtr_H
-#include <Util/SharedPtr.h>
+#ifndef INC_Connection_ConnectionPtr_h
+#define INC_Connection_ConnectionPtr_h
+#include <tvr/Util/SharedPtr.h>
+#include <tvr/Connection/Connection.h>
 namespace tvr {
     namespace connection {
         class Connection;

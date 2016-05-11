@@ -1,4 +1,6 @@
-#include <Connection/VrpnBasedConnection.h>
+#include <tvr/Connection/VrpnBasedConnection.h>
+#include <tvr/Util/Verbosity.h>
+
 #include <vrpn_ConnectionPtr.h>
 
 namespace tvr {

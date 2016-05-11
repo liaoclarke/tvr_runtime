@@ -5,12 +5,15 @@ set(API
     "${HEADER_LOCATION}/ServerPtr.h"
     "${HEADER_LOCATION}/ServerImpl.h"
     "${HEADER_LOCATION}/ConfigureServer.h"
-    "${HEADER_LOCATION}/ConfigureServerFromFile.h")
+    "${HEADER_LOCATION}/ConfigureServerFromFile.h"
+    "${HEADER_LOCATION}/Connection.h"
+    "${HEADER_LOCATION}/ConnectionPtr.h"
+    "${HEADER_LOCATION}/Verbosity.h")
 
 set(SOURCE
-    ConfigureServer.cpp
     Server.cpp
-    ServerImpl.cpp)
+    ServerImpl.cpp
+    ConfigureServer.cpp)
 
 tvr_add_library()
 

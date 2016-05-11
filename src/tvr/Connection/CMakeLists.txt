@@ -2,7 +2,9 @@ tvr_setup_lib_vars(Connection)
 
 set(API
     "${HEADER_LOCATION}/Connection.h"
-    "${HEADER_LOCATOIN}/ConnectionPtr.h")
+    "${HEADER_LOCATOIN}/ConnectionPtr.h"
+    "${HEADER_LOCATION}/VrpnBasedConnection.h"
+    "${HEADER_LOCATION}/SharedPtr.h")
 
 set(SOURCE
     Connection.cpp
@@ -15,7 +17,7 @@ set_target_properties(${LIBNAME_FULL} PROPERTIES
     INTERFACE_tvrcore_MAJOR_VERSION 0)
 
 set_property(TARGET ${LIBNAME_FULL} APPEND PROPERTY
-    COMPATIBEL_INTERFACE_STRING tvrcore_MAJOR_VERSION)
+    COMPATIBLE_INTERFACE_STRING tvrcore_MAJOR_VERSION)
 
 target_include_directories(${LIBNAME_FULL})
 

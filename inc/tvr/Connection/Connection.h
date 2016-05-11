@@ -1,6 +1,5 @@
-#ifndef CONNECTION_Connection_H
-#define CONNECTION_Connection_H
-
+#ifndef INC_Connection_Connection_h
+#define INC_Connection_Connection_h
 #include <boost/noncopyable.h>
 #include <boost/optional.h>
 
@@ -19,7 +18,7 @@ namespace tvr {
             protected:
                 virtual void m_process() = 0;
                 Connection();
-        }
+        };
     }
 }
 
