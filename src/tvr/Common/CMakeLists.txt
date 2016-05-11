@@ -17,13 +17,16 @@ set(API
 set(SOURCE
     NetworkingSupport.cpp)
 
-tvr_add_libraray()
+tvr_add_library()
 
-set_target_properties(${LIBNAME_FULL} PROPERTIES
+set_target_properties(
+    ${LIBNAME_FULL} PROPERTIES
     VERSION ${TVR_VERSION}
+    SOVERSION 0
     INTERFACE_tvrcore_MAJOR_VERSION 0)
 
-set_property(TARGET ${LIBNAME_FULL} APPEND PROPERTY
+set_property(
+    TARGET ${LIBNAME_FULL} APPEND PROPERTY
     COMPATIBLE_INTERFACE_STRING tvrcore_MAJOR_VERSION)
 
 target_include_directories(${LIBNAME_FULL}

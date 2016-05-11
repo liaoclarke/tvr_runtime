@@ -18,6 +18,7 @@ message("----------- trying to find Jsoncpp & Boost & VRPN -------------")
 find_package(JsonCpp)
 find_package(VRPN)
 include(BoostTargets)
+include(EnableExtraCompilerWarnings)
 
 if(JsonCpp_FOUND)
     message("INFO: we found LibJsoncpp on your pc.")
@@ -52,7 +53,7 @@ set(JsonCpp_PROCESS_INCLUDES JsonCpp_INCLUDE_DIR)
 set(JsonCpp_PROCESS_LIBS JsonCpp_LIBRARY)
 
 set(HEADER_BASE "${CMAKE_CURRENT_SOURCE_DIR}/inc")
-add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/src")
+add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/src/tvr")
 
 # add the executable
 add_executable(tvr_server tvr_server.cpp)

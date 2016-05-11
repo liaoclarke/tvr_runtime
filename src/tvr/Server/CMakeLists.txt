@@ -19,6 +19,7 @@ tvr_add_library()
 
 set_target_properties(${LIBNAME_FULL} PROPERTIES
     VERSION ${TVR_VERSION}
+    SOVERSION 0
     INTERFACE_tvrcore_MAJOR_VERSION 0)
 
 set_property(TARGET ${LIBNAME_FULL} APPEND PROPERTY
@@ -29,8 +30,7 @@ target_include_directories(${LIBNAME_FULL}
     $<BUILD_INTERFACE:${Boost_INCLUDE_DIRS}>)
 
 target_compile_options(${LIBNAME_FULLl}
-    PUBLIC
-    ${TVR_CX11_FLAGS})
+    PUBLIC)
 
 target_link_libraries(${LIBNAME_FULL}
     PUBLIC
