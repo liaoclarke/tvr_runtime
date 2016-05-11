@@ -1,5 +1,8 @@
-#include <Server/ServerImpl.h>
-#include <Connection/Connection.h>
+#include <tvr/Server/ServerImpl.h>
+#include <tvr/Connection/Connection.h>
+#include <tvr/Util/Verbosity.h>
+
+#include <vrpn_ConnectionPtr.h>
 
 #include <stdexcept>
 #include <functional>

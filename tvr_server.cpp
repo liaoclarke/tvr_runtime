@@ -1,5 +1,5 @@
+#include <tvr/Server/ConfigureServerFromFile.h>
 #include <iostream>
-#include <Server/ConfigureServerFromFile.h>
 
 int main() {
     std::string configName(tvr::server::getDefaultConfigFilename());

@@ -1,5 +1,7 @@
-#include <Connection/Connection.h>
-#include <Connection/ConnectionPtr.h>
+#include <tvr/Connection/Connection.h>
+#include <tvr/Connection/ConnectionPtr.h>
+#include <tvr/Connection/VrpnBasedConnection.h>
+#include <tvr/Util/SharedPtr.h>
 
 namespace tvr {
     namespace connection {

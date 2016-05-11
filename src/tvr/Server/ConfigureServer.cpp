@@ -1,4 +1,8 @@
+#include <tvr/Server/ConfigureServer.h>
+#include <tvr/Server/Server.h>
+#include <tvr/Server/ServerPtr.h>
 
+#include <boost/noncopyable.h>
 #include <json/value.h>
 #include <json/reader.h>
 
@@ -7,9 +11,6 @@
 
 namespace tvr {
     namespace server {
-        ConfigureServer::ConfigureServer() : m_data(new ConfigureServerData()) {}
-        ConfigureServer::~ConfigureServer() {}
-
         class ConfigureServerData : boost::noncopyable {
             public:
                 template<typename T> inline void parse(T &json) {
@@ -26,6 +27,10 @@ namespace tvr {
 
                 Json::Value root;
         }
+
+        ConfigureServer::ConfigureServer() : m_data(new ConfigureServerData()) {}
+
+        ConfigureServer::~ConfigureServer() {}
        
         void ConfigureServer::loadConfig(std::string const &json) {
             m_data->parse(json);
@@ -37,7 +42,6 @@ namespace tvr {
 
         ServerPtr ConfigureServer::constructServer() {
             Json::Value const &root(m_data->root);
-            boost::optional<int> port;
             int sleepTime = 0;
             m_server = Server::create();
             if (sleepTime > 0.0) {
@@ -56,24 +60,26 @@ namespace tvr {
         }
 
         static const char DISPLAY_KEY[] = "display";
+        static const char DISPLAY_PATH[] = "/display";
         bool ConfigureServer::processDisplay() {
             bool success = false;
             Json::Value const &display = m_data->getMember(DISPLAY_KEY);
             if (display.isNull()) {
                 return success;
             }
-            success = m_server->addString(DISPLAY_KEY, display.asString());
+            success = m_server->addString(DISPLAY_PATH, display.asString());
             return success;
         }
 
         static const char RENDERMANAGER_KEY[] = "renderManagerConfig";
+        static const char RENDERMANAGER_PATH[] = "/renderManagerConfig";
         bool ConfigureServer::processRenderManagerParameters() {
             bool success = false;
             Json::Value const &renderManager = m_data->getMember(RENDERMANAGER_KEY);
             if (renderManager.isNull()) {
                 return success; 
             }
-            success = m_server->addString(RENDERMANAGER_KEY, renderManager.asString());
+            success = m_server->addString(RENDERMANAGER_PATH, renderManager.asString());
             return success;
         }
     }
