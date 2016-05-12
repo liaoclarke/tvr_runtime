@@ -12,13 +12,14 @@ namespace tvr {
             public:
                 VrpnBasedConnection();
                 virtual ~VrpnBasedConnection();
+                virtual void *getUnderlyingObject();
             private:
-                void m_initConnection(const char NIC[] = nullptr);
+                void m_initConnection(const char iface[] = nullptr);
                 virtual void m_process();
                 vrpn_ConnectionPtr m_vrpnConnection;
                 tvr::common::NetworkingSupport m_network;
-        }
-    }
+		};
+	}
 }
 
 #endif

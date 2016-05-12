@@ -1,17 +1,19 @@
 #include <tvr/Server/ConfigureServerFromFile.h>
 #include <iostream>
 
-int main() {
+static tvr::server::ServerPtr server;
+
+int main(int argc, char *argv[]) {
     std::string configName(tvr::server::getDefaultConfigFilename());
     if (argc > 1) {
 	    configName = argv[1];
     } else {
-	    std::out << "" << std::endl;
+	    std::cout << "" << std::endl;
     }
     server = tvr::server::configureServerFromFile(configName);
     if (!server) {
 	    return -1;
     }
-    std::out << "" << std::endl;
+    std::cout << "" << std::endl;
 	server->startAndAwaitShutdown();
 }

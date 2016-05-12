@@ -18,7 +18,7 @@ namespace tvr {
             public:
                 ServerImpl(tvr::connection::ConnectionPtr const &conn);
                 ~ServerImpl();
-                void startAndAwaitShutDown();
+                void startAndAwaitShutdown();
                 void stop();
                 void signalStop();
                 void setHardwareDetectOnConnection();
@@ -33,7 +33,7 @@ namespace tvr {
                 bool m_loop();
                 void m_update();
                 template<typename Callable> void m_callControlled(Callable f);
-                void m_orderdDestruction();
+                void m_orderedDestruction();
                 void m_queueTreeSend();
                 void m_sendTree();
                 bool m_inServerThead() const;
@@ -62,7 +62,7 @@ namespace tvr {
         };
 
         class TemporaryThreadIDChanger : boost::noncopyable {
-            public::
+            public:
                 TemporaryThreadIDChanger(boost::thread::id &id) 
                     : m_id(id), m_origID(id) {
                         m_id = boost::this_thread::get_id();
@@ -75,19 +75,19 @@ namespace tvr {
                 boost::thread::id &m_id;
                 boost::thread::id m_origID;
         };
-    }
 
-    template <typename Callable>
-    inline void ServerImpl::m_callControlled(Callable f) {
-        boost::unique_lock<boost::mutex> lock(m_runControl);        
-        if (m_running && boost::this_thread::get_id() != m_thread.get_id()) {
-            boost::unique_lock<boost::mutex> lock(m_mainThreadMutex);
-            TemporaryThreadIDChanger changer(m_mainThreadId);
-            f();
-        } else {
-            f();
-        } 
-    }
+        template <typename Callable>
+        inline void ServerImpl::m_callControlled(Callable f) {
+            boost::unique_lock<boost::mutex> lock(m_runControl);        
+            if (m_running && boost::this_thread::get_id() != m_thread.get_id()) {
+                boost::unique_lock<boost::mutex> lock(m_mainThreadMutex);
+                TemporaryThreadIDChanger changer(m_mainThreadId);
+                f();
+            } else {
+                f();
+            }
+        }
+    } 
 }
 
 #endif

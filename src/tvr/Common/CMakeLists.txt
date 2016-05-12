@@ -11,19 +11,21 @@ check_c_source_compiles("#include <byteswap.h>\nint main() {return bswap_16(0x12
 check_c_source_compiles("#include <byteswap.h>\nint main() {return __bswap_16(0x1234);}" TVR_HAVE_WORKING_UNDERSCORES_BSWAP)
 configure_file(ConfigByteSwapping.h.cmake_in "${CMAKE_CURRENT_BINARY_DIR}/ConfigByteSwapping.h")
 
-set(API
-    "${HEADER_LOCATION}/NetworkingSupport.h")
+#set(API
+#    "${HEADER_LOCATION}/NetworkingSupport.h")
 
 set(SOURCE
     NetworkingSupport.cpp)
 
 tvr_add_library()
 
-set_target_properties(
-    ${LIBNAME_FULL} PROPERTIES
-    VERSION ${TVR_VERSION}
-    SOVERSION 0
-    INTERFACE_tvrcore_MAJOR_VERSION 0)
+message("LIBNAME_FULL" = ${LIBNAME_FULL})
+message("TVR_VERSION" = ${TVR_VERSION})
+message("INTERFACE_tvrcore_MAJOR_VERSION" = ${INTERFACE_tvrcore_MAJOR_VERSION})
+
+set_target_properties(${LIBNAME_FULL} PROPERTIES 
+    VERSION ${TVR_VERSION} 
+    SOVERSION 0)
 
 set_property(
     TARGET ${LIBNAME_FULL} APPEND PROPERTY

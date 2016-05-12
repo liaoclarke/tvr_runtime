@@ -1,6 +1,7 @@
 #include <tvr/Server/ServerImpl.h>
 #include <tvr/Connection/Connection.h>
 #include <tvr/Util/Verbosity.h>
+#include <tvr/Util/PortFlags.h>
 
 #include <vrpn_ConnectionPtr.h>
 
@@ -80,10 +81,11 @@ namespace tvr {
             */
         }
 
-        void ServerImpl::addString(std::String const &key, std::String const &value) {
+        bool ServerImpl::addString(std::string const &key, std::string const &value) {
+            return true;
         }
 
-        void ServerImpl::setSleepTime() {
+        void ServerImpl::setSleepTime(int microseconds) {
             /*m_sleepTime = microseconds;
              */
         }
@@ -128,7 +130,6 @@ namespace tvr {
                 m_sendTree();
                 m_treeDirty.reset();
             }*/
-            return true;
         }
 
         bool ServerImpl::m_loop() {
@@ -141,6 +142,7 @@ namespace tvr {
             }
             return shouldContinue;
             */
+            return true;
         }
 
         void ServerImpl::m_orderedDestruction() {
@@ -148,6 +150,13 @@ namespace tvr {
             m_systemDevice.reset();
             m_conn.reset();
             */
+        }
+
+        bool m_inServerThread() {
+            return true;
+        }
+
+        void ServerImpl::m_queueTreeSend() {
         }
 
         void ServerImpl::m_sendTree() {
@@ -164,8 +173,8 @@ namespace tvr {
             if (self->m_currentSleepTime > self->m_sleepTime) {
                 self->currentSleepTime = self->m_sleepTime;
             }
-            return 0;
             */
+            return 0;
         }
 
         int ServerImpl::m_enterIdle(void *userdata, vrpn_HANDLERPARAM) {

@@ -24,7 +24,7 @@ namespace tvr {
         }
 
         void Server::startAndAwaitShutdown() {
-            m_impl->awaitShutdown();
+            m_impl->startAndAwaitShutdown();
         }
 
         void Server::stop() {

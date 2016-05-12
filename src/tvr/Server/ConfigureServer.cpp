@@ -2,7 +2,7 @@
 #include <tvr/Server/Server.h>
 #include <tvr/Server/ServerPtr.h>
 
-#include <boost/noncopyable.h>
+#include <boost/noncopyable.hpp>
 #include <json/value.h>
 #include <json/reader.h>
 
@@ -26,7 +26,7 @@ namespace tvr {
                 }
 
                 Json::Value root;
-        }
+        };
 
         ConfigureServer::ConfigureServer() : m_data(new ConfigureServerData()) {}
 
@@ -36,7 +36,7 @@ namespace tvr {
             m_data->parse(json);
         }
 
-        void ConfigureServer::loadConfig(std::string &json) {
+        void ConfigureServer::loadConfig(std::istream &json) {
             m_data->parse(json);
         }
 

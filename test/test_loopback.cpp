@@ -29,13 +29,14 @@
 #include "vrpn_Analog_Output.h"
 #include "vrpn_Button.h"                // for vrpn_Button_Remote, etc
 #include "vrpn_Configure.h"             // for VRPN_CALLBACK, etc
-#include "vrpn_Connection.h"            // for vrpn_Connection, etc
+//#include "vrpn_Connection.h"            // for vrpn_Connection, etc
 #include "vrpn_Dial.h"                  // for vrpn_Dial_Remote, etc
 #include "vrpn_Poser.h"                 // for vrpn_POSERCB, etc
 #include "vrpn_Shared.h"                // for timeval, vrpn_gettimeofday, etc
 #include "vrpn_Text.h"                  // for vrpn_Text_Receiver, etc
 #include "vrpn_Tracker.h"               // for vrpn_Tracker_Remote, etc
 #include "vrpn_Types.h"                 // for vrpn_float64
+#include "vrpn_ConnectionPtr.h"
 
 const char	*DIAL_NAME = "Dial0@localhost";
 const char	*TRACKER_NAME = "Tracker0@localhost";

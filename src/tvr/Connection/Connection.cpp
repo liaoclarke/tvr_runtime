@@ -9,5 +9,11 @@ namespace tvr {
             ConnectionPtr conn(make_shared<VrpnBasedConnection>());
             return conn;
         }
+
+        Connection::Connection() {}
+
+        Connection::~Connection() {}
+
+        void *Connection::getUnderlyingObject() { return nullptr; }
     }
 }

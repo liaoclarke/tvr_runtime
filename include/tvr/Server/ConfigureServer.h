@@ -1,6 +1,7 @@
 #ifndef INC_Server_ConfigureServer_h
 #define INC_Server_ConfigureServer_h
-#include <Server/ServerPtr.h>
+#include <tvr/Server/ServerPtr.h>
+#include <tvr/Util/UniquePtr.h>
 
 #include <boost/noncopyable.hpp>
 
@@ -10,6 +11,7 @@
 
 namespace tvr {
     namespace server {
+        class ConfigureServerData;
         class ConfigureServer : boost::noncopyable {
             public:
                 ConfigureServer();
@@ -21,9 +23,10 @@ namespace tvr {
                 bool processExternalDevices();
                 bool processDisplay();
                 bool processRenderManagerParameters();
-            prvate:
+            private:
                 unique_ptr<ConfigureServerData> m_data;
                 ServerPtr m_server;
         };
     }
 }
+#endif

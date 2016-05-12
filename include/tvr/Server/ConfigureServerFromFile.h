@@ -1,6 +1,8 @@
 #ifndef INC_Server_ConfigureServerFromFile_h
 #define INC_Server_ConfigureServerFromFile_h
 #include <tvr/Server/ConfigureServer.h>
+#include <tvr/Server/ServerPtr.h>
+#include <tvr/Server/Server.h>
 
 #include <iostream>
 #include <fstream>
@@ -12,21 +14,21 @@ namespace tvr {
             return "tvr_server_config.json";
         }
 
-        inline ServerPtr configureServerFromFile(std::String const &configName) {
+        ServerPtr configureServerFromFile(std::string const &configName) {
             ServerPtr ret;
-            std::out << "Using config file '" << configName << "'" << std::endl;
+            std::cout << "Using config file '" << configName << "'" << std::endl;
             std::ifstream config(configName);
             if (!config.good()) {
-                std::out << "Could not open config file" << std::endl;
+                std::cout << "Could not open config file" << std::endl;
                 return nullptr;
             }
             tvr::server::ConfigureServer srvConfig;
-            std::out << "Constructing server as configured..." << std::endl;
+            std::cout << "Constructing server as configured..." << std::endl;
             try {
                 srvConfig.loadConfig(config);
                 ret = srvConfig.constructServer();
-            } catch (std::exceptoin &e) {
-                std::err << "Caught exception constructing server from JSON config file: " << e.what() << std::endl;
+            } catch (std::exception &e) {
+                std::cerr << "Caught exception constructing server from JSON config file: " << e.what() << std::endl;
                 return nullptr;
             }
             
@@ -52,21 +54,22 @@ namespace tvr {
             }*/
 
             if (srvConfig.processDisplay()) {
-                std::out << "Display descriptor found and parsed from config file." << std::endl;
+                std::cout << "Display descriptor found and parsed from config file." << std::endl;
             } else {
-                std::out << "Using Emulator HMD for display configuration. "
+                std::cout << "Using Emulator HMD for display configuration. "
                             "Did not find an alternate valid display object in config file." 
                          << std::endl;
             }
 
             if (srvConfig.processRenderManagerParameters()) {
-                std::out << "RenderManager config found and parsed from the config file." << std::endl;
+                std::cout << "RenderManager config found and parsed from the config file." << std::endl;
             }
 
-            std::out << "Triggering automatic hardware detection..." << std::endl;
+            std::cout << "Triggering automatic hardware detection..." << std::endl;
             ret->triggerHardwareDetect();
 
             return ret;
         }
     }
 }
+#endif

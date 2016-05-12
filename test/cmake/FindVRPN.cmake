@@ -62,6 +62,7 @@ endif()
 
 find_path(VRPN_INCLUDE_DIR
 	NAMES
+    vrpn_ConnectionPtr.h
 	vrpn_Connection.h
 	PATH_SUFFIXES
     inc

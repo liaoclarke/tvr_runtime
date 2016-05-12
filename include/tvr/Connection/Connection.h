@@ -1,12 +1,14 @@
 #ifndef INC_Connection_Connection_h
 #define INC_Connection_Connection_h
-#include <boost/noncopyable.h>
-#include <boost/optional.h>
+#include <tvr/Connection/ConnectionPtr.h>
+#include <tvr/Util/SharedPtr.h>
+
+#include <boost/noncopyable.hpp>
+#include <boost/optional.hpp>
 
 #include <string>
 #include <vector>
 #include <functional>
-#include <tuple>
 
 namespace tvr {
     namespace connection {
@@ -14,6 +16,7 @@ namespace tvr {
             public:
                 static ConnectionPtr createConnection();
                 virtual ~Connection();
+                virtual void *getUnderlyingObject();
 
             protected:
                 virtual void m_process() = 0;

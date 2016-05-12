@@ -54,18 +54,19 @@ macro(tvr_add_library)
         $<BUILD_INTERFACE:${HEADER_BASE}>
         $<INSTALL_INTERFACE:include>)
 
-    target_link_libraries(${LIBNAME_FULL} PRIVATE tvr_cxx11_flags)
+    target_link_libraries(${LIBNAME_FULL} PRIVATE)
     enable_extra_compiler_warnings(${LIBNAME_FULL})
 
+    message("CMAKE_INSTALL_LIBDIR" = ${CMAKE_INSTALL_LIBDIR})
     ###
     # Install library and headers
     ###
-    install(TARGETS ${LIBNAME_FULL}
-        EXPORT tvrTargets
-        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR} COMPONENT Runtime
-        ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR} COMPONENT Devel
-        RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR} COMPONENT Runtime
-        INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
+    #   install(TARGETS ${LIBNAME_FULL}
+    #       EXPORT tvrTargets
+    #       LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR} COMPONENT Runtime
+    #       ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR} COMPONENT Devel
+    #       RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR} COMPONENT Runtime
+    #       INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
 
     install(FILES ${API}
         DESTINATION

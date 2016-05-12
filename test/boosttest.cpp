@@ -1,6 +1,7 @@
 #include <json/value.h>
 #include <json/reader.h>
 #include <boost/noncopyable.hpp>
+#include <boost/thread.hpp>
 #include <iostream>
 #include <fstream>
 #include <stdexcept>
