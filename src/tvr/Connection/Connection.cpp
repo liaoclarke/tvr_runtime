@@ -14,6 +14,10 @@ namespace tvr {
 
         Connection::~Connection() {}
 
+        void Connection::process() {
+            m_process();
+        }
+
         void *Connection::getUnderlyingObject() { return nullptr; }
     }
 }

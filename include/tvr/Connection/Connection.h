@@ -16,6 +16,7 @@ namespace tvr {
             public:
                 static ConnectionPtr createConnection();
                 virtual ~Connection();
+                void process();
                 virtual void *getUnderlyingObject();
 
             protected:

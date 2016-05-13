@@ -2,6 +2,7 @@
 #include <tvr/Connection/Connection.h>
 #include <tvr/Util/Verbosity.h>
 #include <tvr/Util/PortFlags.h>
+#include <tvr/Util/Microsleep.h>
 
 #include <vrpn_ConnectionPtr.h>
 
@@ -40,9 +41,8 @@ namespace tvr {
         }
 
         void ServerImpl::startAndAwaitShutdown() {
-            /*(m_start();
+            m_start();
             m_awaitShutdown();
-            */
         }
 
         void ServerImpl::stop() {
@@ -68,8 +68,7 @@ namespace tvr {
         }
 
         void ServerImpl::triggerHardwareDetect() {
-            /*m_callControlled([&] { m_triggeredDetect = true; });
-             */
+            m_callControlled([&] { m_triggeredDetect = true; });
         }
 
         void ServerImpl::update() {
@@ -86,17 +85,15 @@ namespace tvr {
         }
 
         void ServerImpl::setSleepTime(int microseconds) {
-            /*m_sleepTime = microseconds;
-             */
+            m_sleepTime = microseconds;
         }
 
         void ServerImpl::m_awaitShutdown() {
-            /*m_thread.join();
-             */
+            m_thread.join();
         }
 
         void ServerImpl::m_start() {
-            /*boost::unique_lock<boost::mutex> lock(m_runControl);
+            boost::unique_lock<boost::mutex> lock(m_runControl);
             if (!m_conn) {
                 throw std::logic_error("Cannot start server - context or connection destroyed (probably attemping to restart a stopped server)");
             }
@@ -106,43 +103,42 @@ namespace tvr {
             m_thread = boost::thread([&] {
                 bool keepRunning = true;
                 m_mainThreadId = m_thread.get_id();
-                tvr::util::LoopGuard guard(m_run);
+                //tvr::util::LoopGuard guard(m_run);
                 do {
                     keepRunning = this->m_loop();
                 } while (keepRunning);
                m_orderedDestruction();
                m_running = false;
                });
-            m_run.signalAndWaitForStart();
-            */
+            //m_run.signalAndWaitForStart();
         }
 
         void ServerImpl::m_update() {
-            /*m_conn->process();
-            m_systemDevice->mainloop();
+            m_conn->process();
+            //m_systemDevice->mainloop();
             if (m_triggeredDetect) {
-                TVR_DEV_VERBOSE("");
-                m_ctx->triggerHardwareDetect();
+                TVR_DEV_VERBOSE("ServerImpl", "trigger hardware detect");
+                //m_ctx->triggerHardwareDetect();
                 m_triggeredDetect = false;
             }
-            if (m_treeDirty) {
-                TVR_DEV("");
-                m_sendTree();
-                m_treeDirty.reset();
-            }*/
+            //if (m_treeDirty) {
+            //    TVR_DEV_VERBOSE("ServerImpl", "json tree is dirty");
+            //    m_sendTree();
+            //    m_treeDirty.reset();
+            //}
         }
 
         bool ServerImpl::m_loop() {
-            /*bool shouldContinue;
+            bool shouldContinue = true;
             boost::unique_lock<boost::mutex> lock(m_mainThreadMutex);
             m_update();
-            shouldContinue = m_run.shouldContinue();
+            //shouldContinue = m_run.shouldContinue();
             if (m_currentSleepTime > 0) {
+                TVR_DEV_VERBOSE("ServerImpl", "server go sleep");
                 tvr::util::time::microsleep(m_currentSleepTime);
             }
             return shouldContinue;
-            */
-            return true;
+            //return true;
         }
 
         void ServerImpl::m_orderedDestruction() {

@@ -11,7 +11,7 @@
 namespace tvr {
     namespace server {
         inline const char *getDefaultConfigFilename() {
-            return "e:/TencentVR/tvr_runtime/tvr_server_config.json";
+            return "e:/TencentVR/tvr_runtime/config/tvr_server_config.json";
         }
 
         ServerPtr configureServerFromFile(std::string const &configName) {
