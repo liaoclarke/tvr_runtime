@@ -1,5 +1,6 @@
 #include <tvr/Server/ServerImpl.h>
 #include <tvr/Connection/Connection.h>
+#include <tvr/Common/CreateDevice.h>
 #include <tvr/Util/Verbosity.h>
 #include <tvr/Util/PortFlags.h>
 #include <tvr/Util/Microsleep.h>
@@ -26,7 +27,7 @@ namespace tvr {
             if (!(vrpnConn->doing_okay())) {
                 throw std::runtime_error("Could not create server - there is probably another instance of the server or a VRPN server running already.");
             }
-            //m_systemDevice = tvr::common::createServerDevice(vrpnConn);
+            m_systemDevice = tvr::common::createServerDevice("tencent_dk0", vrpnConn);
             //m_systemComponent = m_systemDevice->addComponent(tvr::common::SystemComponent::create());
             //m_systemComponent->registerUpdateHandler();
             //m_commonComponent = m_systemDevice->addComponent(tvr::common::CommonComponent::create());
@@ -115,7 +116,7 @@ namespace tvr {
 
         void ServerImpl::m_update() {
             m_conn->process();
-            //m_systemDevice->mainloop();
+            m_systemDevice->update();
             if (m_triggeredDetect) {
                 TVR_DEV_VERBOSE("ServerImpl", "trigger hardware detect");
                 //m_ctx->triggerHardwareDetect();

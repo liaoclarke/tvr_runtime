@@ -1,6 +1,6 @@
 #ifndef COMMON_BaseDevicePtr_H
 #define COMMON_BaseDevicePtr_H
-#include <Util/SharedPtr.h>
+#include <tvr/Util/SharedPtr.h>
 namespace tvr {
     namespace common {
         class BaseDevice;

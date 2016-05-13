@@ -1,8 +1,8 @@
-#ifndef COMMON_BaseDevice_H
-#define COMMON_BaseDevice_H
+#ifndef INC_Common_BaseDevice_h
+#define INC_Common_BaseDevice_h
 
-#include <Common/BaseDevicePtr.h>
-#include <Common/DeviceComponentPtr.h>
+#include <tvr/Common/BaseDevicePtr.h>
+//#include <tvr/Common/DeviceComponentPtr.h>
 
 #include <vrpn_ConnectionPtr.h>
 #include <vrpn_Connection.h>
@@ -30,11 +30,12 @@ namespace tvr {
                 virtual void m_update() = 0;
 
             private:
-                void m_addComponent(DeviceComponentPtr component);
-                DeviceComponentList m_components;
+                //void m_addComponent(DeviceComponentPtr component);
+                //DeviceComponentList m_components;
                 vrpn_ConnectionPtr m_conn;
+                RawSenderType m_sender;
                 std::string m_name;
-        }
+        };
     }
 }
 

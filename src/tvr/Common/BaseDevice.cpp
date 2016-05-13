@@ -1,5 +1,5 @@
-#include <Common/BaseDevice.h>
-#include <Common/DeviceComponent.h>
+#include <tvr/Common/BaseDevice.h>
+//#include <tvr/Common/DeviceComponent.h>
 
 #include <boost/assert.hpp>
 
@@ -9,21 +9,21 @@ namespace tvr {
     namespace common {
         BaseDevice::BaseDevice() {}
         BaseDevice::~BaseDevice() {
-            m_components.clear();
+            //m_components.clear();
         }
 
-        void BaseDevice::m_addComponent(DeviceComponentPtr component) {
+        /*void BaseDevice::m_addComponent(DeviceComponentPtr component) {
             if (!component) {
                 throw std::logic_error("Tried to add a null component pointer to a base device!");
             }
             m_components.push_back(component);
             component->recordParent(*this);
-        }
+        }*/
 
         void BaseDevice::update() {
-            for (auto const &component : m_components) {
+            /*for (auto const &component : m_components) {
                 component->update();
-            }
+            }*/
             m_update();
         }
 
@@ -35,7 +35,7 @@ namespace tvr {
             return m_name;
         }
 
-        void BaseDevice:m_setup() {
+        void BaseDevice::m_setup() {
             m_conn = conn;
             m_sender = sender;
             m_name = name;

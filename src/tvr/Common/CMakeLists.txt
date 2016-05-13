@@ -15,6 +15,10 @@ configure_file(ConfigByteSwapping.h.cmake_in "${CMAKE_CURRENT_BINARY_DIR}/Config
 #    "${HEADER_LOCATION}/NetworkingSupport.h")
 
 set(SOURCE
+    BaseDevice.cpp
+    CreateDevice.cpp
+    DeviceWrapper.cpp
+    VrpnGenericServerObject.cpp
     NetworkingSupport.cpp)
 
 tvr_add_library()
@@ -33,6 +37,7 @@ set_property(
 
 target_include_directories(${LIBNAME_FULL}
     PUBLIC
+    $<BUILD_INTERFACE:${VRPN_INCLUDE_DIR}>
     $<BUILD_INTERFACE:${Boost_INCLUDE_DIRS}>
     PRIVATE)
 

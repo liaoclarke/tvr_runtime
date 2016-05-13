@@ -2,6 +2,7 @@
 #define INC_Server_ServerImpl_h
 #include <tvr/Server/Server.h>
 #include <tvr/Util/SharedPtr.h>
+#include <tvr/Common/BaseDevicePtr.h>
 #include <tvr/Connection/ConnectionPtr.h>
 
 #include <boost/noncopyable.hpp>
@@ -41,7 +42,7 @@ namespace tvr {
                 static int __stdcall m_enterIdle(void *userdata, vrpn_HANDLERPARAM);
 
                 tvr::connection::ConnectionPtr m_conn;
-                //tvr::common::BaseDevicePtr m_systemDevice;
+                tvr::common::BaseDevicePtr m_systemDevice;
                 //tvr::common::SystemComponent *m_systemComponent = nullptr;
                 //tvr::common::CommonComponent *m_commonComponent = nullptr;
                 //tvr::common::PathTree m_tree;

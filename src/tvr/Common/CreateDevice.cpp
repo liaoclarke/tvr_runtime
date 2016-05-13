@@ -1,5 +1,4 @@
-#include <Common/CreateDevice.h>
-#include <Common/DeviceWrapper.h>
+#include <tvr/Common/DeviceWrapper.h>
 namespace tvr {
     namespace common {
         BaseDevicePtr createServerDevice(std::string const &name, vrpn_ConnectionPtr const &conn) {
