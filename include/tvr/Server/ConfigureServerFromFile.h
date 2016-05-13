@@ -11,7 +11,7 @@
 namespace tvr {
     namespace server {
         inline const char *getDefaultConfigFilename() {
-            return "tvr_server_config.json";
+            return "e:/TencentVR/tvr_runtime/tvr_server_config.json";
         }
 
         ServerPtr configureServerFromFile(std::string const &configName) {
@@ -19,7 +19,7 @@ namespace tvr {
             std::cout << "Using config file '" << configName << "'" << std::endl;
             std::ifstream config(configName);
             if (!config.good()) {
-                std::cout << "Could not open config file" << std::endl;
+                std::cout << "Could not open config file" << std::strerror(errno) << std::endl;
                 return nullptr;
             }
             tvr::server::ConfigureServer srvConfig;

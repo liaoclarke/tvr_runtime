@@ -1,0 +1,78 @@
+{
+    "display": {
+        "hmd": {
+            "device": {
+                "vendor": "Tencent",
+                "model": "DK0",
+                "num_displays": 1
+            },
+            "field_of_view": {
+                "monocular_horizontal": 90,
+                "monocular_vertical": 100.0,
+                "stereo_left": 40,
+                "stereo_right": 40,
+                "stereo_top": 40,
+                "stereo_bottom": 40 
+            },
+            "resolutoins":[
+                {
+                    "width": 1920,
+                    "height": 1080,
+                    "video_inputs": 1,
+                    "display_mode": "horz_side_by_side",
+                    "swap_eyes": 0
+                }
+            ],
+            "distortion": {
+                "k1_red": 1.01999,
+                "k2_red": 1.01999,
+                "k1_blue": 1.48601,
+                "k2_blue": 1.48601,
+                "k1_green": 1.248,
+                "k2_green": 1.248
+            },
+            "lenToScreenDistance": 0.5,
+            "eyes": [
+                {
+                    "side": "left",
+                    "center_proj_x": 0.25,
+                    "center_proj_y": 0.25
+                },
+                {
+                    "side": "right",
+                    "center_proj_x": 0.75,
+                    "center_proj_y": 0.75
+                }
+            ]
+        }
+    },
+
+    "rendermanager": {
+        "directModeEnabled": true,
+        "directHighPriorityEnabled": true,
+        "numBuffers": 1,
+        "verticalSyncEnabling": false,
+        "verticalSyncBlockRenderingEnabled": true,
+        "renderOverfillFactor": 1.5,
+
+        "prediction": {
+            "enabled": true,
+            "letEyeDelayMS": 7.5,
+            "rightEyeDelayMS": 0
+        },
+
+        "timewarp": {
+            "enabled": true,
+            "asynchronous": false,
+            "maxMSBeforeVSync": 5
+        }
+    },
+
+    "accountmanager": {
+        "id": 12345,
+        "email": "12345@qq.com",
+        "cell": "123456890",
+        "wechat": "123456",
+        "qq": "123456"
+    }
+}

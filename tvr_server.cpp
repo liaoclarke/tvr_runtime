@@ -8,7 +8,9 @@ int main(int argc, char *argv[]) {
     if (argc > 1) {
 	    configName = argv[1];
     } else {
-	    std::cout << "" << std::endl;
+        std::cout << "Using default config file - pass a filename on the command "
+               "line to use a different one."
+            << std::endl;
     }
     server = tvr::server::configureServerFromFile(configName);
     if (!server) {

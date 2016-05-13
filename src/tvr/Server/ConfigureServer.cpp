@@ -67,19 +67,21 @@ namespace tvr {
             if (display.isNull()) {
                 return success;
             }
-            success = m_server->addString(DISPLAY_PATH, display.asString());
+            std::cout << "display value: " << display.toStyledString() << std::endl;
+            success = m_server->addString(DISPLAY_PATH, display.toStyledString());
             return success;
         }
 
-        static const char RENDERMANAGER_KEY[] = "renderManagerConfig";
-        static const char RENDERMANAGER_PATH[] = "/renderManagerConfig";
+        static const char RENDERMANAGER_KEY[] = "rendermanager";
+        static const char RENDERMANAGER_PATH[] = "/rendermanager";
         bool ConfigureServer::processRenderManagerParameters() {
             bool success = false;
             Json::Value const &renderManager = m_data->getMember(RENDERMANAGER_KEY);
             if (renderManager.isNull()) {
                 return success; 
             }
-            success = m_server->addString(RENDERMANAGER_PATH, renderManager.asString());
+            std::cout << "rendermanager value: " << renderManager.toStyledString() << std::endl;
+            success = m_server->addString(RENDERMANAGER_PATH, renderManager.toStyledString());
             return success;
         }
     }
