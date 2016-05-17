@@ -27,7 +27,7 @@ namespace tvr {
             if (!(vrpnConn->doing_okay())) {
                 throw std::runtime_error("Could not create server - there is probably another instance of the server or a VRPN server running already.");
             }
-            m_systemDevice = tvr::common::createServerDevice("tencent_dk0", vrpnConn);
+            m_systemDevice = tvr::common::createServerDevice("Tencent_DK0", vrpnConn);
             //m_systemComponent = m_systemDevice->addComponent(tvr::common::SystemComponent::create());
             //m_systemComponent->registerUpdateHandler();
             //m_commonComponent = m_systemDevice->addComponent(tvr::common::CommonComponent::create());
@@ -119,6 +119,7 @@ namespace tvr {
             m_systemDevice->update();
             if (m_triggeredDetect) {
                 TVR_DEV_VERBOSE("ServerImpl", "trigger hardware detect");
+                m_systemDevice->triggerHardwareDetect();
                 //m_ctx->triggerHardwareDetect();
                 m_triggeredDetect = false;
             }

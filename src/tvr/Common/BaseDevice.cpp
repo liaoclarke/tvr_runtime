@@ -1,7 +1,9 @@
 #include <tvr/Common/BaseDevice.h>
+#include <tvr/Common/RawSenderType.h>
 //#include <tvr/Common/DeviceComponent.h>
 
 #include <boost/assert.hpp>
+#include <vrpn_ConnectionPtr.h>
 
 #include <stdexcept>
 
@@ -35,7 +37,7 @@ namespace tvr {
             return m_name;
         }
 
-        void BaseDevice::m_setup() {
+        void BaseDevice::m_setup(vrpn_ConnectionPtr conn, RawSenderType sender, std::string const &name) {
             m_conn = conn;
             m_sender = sender;
             m_name = name;

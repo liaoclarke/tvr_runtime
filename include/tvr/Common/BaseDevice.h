@@ -2,6 +2,7 @@
 #define INC_Common_BaseDevice_h
 
 #include <tvr/Common/BaseDevicePtr.h>
+#include <tvr/Common/RawSenderType.h>
 //#include <tvr/Common/DeviceComponentPtr.h>
 
 #include <vrpn_ConnectionPtr.h>
@@ -21,12 +22,15 @@ namespace tvr {
 
                 void update();
                 void sendPending();
-                std::string const &getDeviceName();
+                std::string const &getDeviceName() const;
+
+                /* the equal object to osvr RegistrationContext */
+                virtual void triggerHardwareDetect() = 0;
 
             protected:
                 BaseDevice();
-                void m_setup();
-                vrpn_ConnectionPtr m_getConnection();
+                void m_setup(vrpn_ConnectionPtr conn, RawSenderType sender, std::string const &name);
+                vrpn_ConnectionPtr m_getConnection() const;
                 virtual void m_update() = 0;
 
             private:

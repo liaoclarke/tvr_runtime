@@ -15,6 +15,7 @@ configure_file(ConfigByteSwapping.h.cmake_in "${CMAKE_CURRENT_BINARY_DIR}/Config
 #    "${HEADER_LOCATION}/NetworkingSupport.h")
 
 set(SOURCE
+    RawSenderType.cpp
     BaseDevice.cpp
     CreateDevice.cpp
     DeviceWrapper.cpp

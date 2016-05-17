@@ -2,6 +2,8 @@
 #define INC_Common_RawMessageType_h
 #include <boost/optional.hpp>
 
+#include <stdint.h>
+
 namespace tvr {
     namespace common {
         class RawMessageType {
