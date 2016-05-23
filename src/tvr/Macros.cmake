@@ -1,14 +1,14 @@
 set(LIB_FOLDER "TVR Libraries")
 
-set(tvr_BUILDTREE_TARGETS "" CACHE INTERNAL "" FORCE)
+set(TVR_BUILDTREE_TARGETS "" CACHE INTERNAL "" FORCE)
 
 # Get a path to this file
 get_filename_component(_MACROS_DIR
     "${CMAKE_CURRENT_LIST_FILE}" PATH)
 
 macro(tvr_append_target _targetlist _target)
-    list(APPEND tvr_${_targetlist}_TARGETS "${_target}")
-    set(tvr_${_targetlist}_TARGETS "${tvr_${_targetlist}_TARGETS}" CACHE INTERNAL "" FORCE)
+    list(APPEND TVR_${_targetlist}_TARGETS "${_target}")
+    set(TVR_${_targetlist}_TARGETS "${TVR_${_targetlist}_TARGETS}" CACHE INTERNAL "" FORCE)
 endmacro()
 
 ## Based on a library name without the tvr prefix, sets the following
@@ -24,7 +24,7 @@ macro(tvr_setup_lib_vars _lib)
     string(TOUPPER ${LIBNAME} LIBNAME_CAPS)
     set(LIBNAME_FULL "tvr${LIBNAME}")
     set(HEADER_LOCATION "${HEADER_BASE}/tvr/${LIBNAME}")
-    set(EXPORT_BASENAME "tvr_${LIBNAME_CAPS}")
+    set(EXPORT_BASENAME "TVR_${LIBNAME_CAPS}")
 endmacro()
 
 ## Adds a library, setting up the folder, export header, static define,
@@ -105,5 +105,5 @@ endmacro()
 ## Copy and install shared libraries from imported targets as required
 function(tvr_copy_dep _target _dep)
     copy_imported_targets(${_target} ${_dep})
-    install_imported_target(${_dep} DESTINATION ${tvr_SHARED_LIBRARY_DIR} COMPONENT Runtime)
+    install_imported_target(${_dep} DESTINATION ${TVR_SHARED_LIBRARY_DIR} COMPONENT Runtime)
 endfunction()
