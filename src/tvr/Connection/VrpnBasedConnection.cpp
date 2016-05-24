@@ -6,7 +6,7 @@
 namespace tvr {
     namespace connection {
         VrpnBasedConnection::VrpnBasedConnection() {
-            m_initConnection("loopback:");
+            m_initConnection("localhost");
         }
 
         VrpnBasedConnection::~VrpnBasedConnection() {

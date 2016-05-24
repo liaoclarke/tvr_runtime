@@ -15,7 +15,7 @@
 
 namespace tvr {
     namespace client {
-        static const std::chrono::milliseconds STARTUP_CONNECT_TIMEOUT(20);
+        static const std::chrono::milliseconds STARTUP_CONNECT_TIMEOUT(20000); // Dead looping
         static const std::chrono::milliseconds STARTUP_TREE_TIMEOUT(1000);
         static const std::chrono::milliseconds STARTUP_LOOP_SLEEP(1);
 

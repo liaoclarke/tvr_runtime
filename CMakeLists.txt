@@ -71,7 +71,7 @@ target_include_directories(tvr_client PUBLIC ${Boost_INCLUDE_DIR})
 target_link_libraries(tvr_client ${VRPN_LIBRARIES})
 target_link_libraries(tvr_client ${Boost_LIBRARIES})
 target_link_libraries(tvr_client ${JsonCpp_LIBRARY})
-target_link_libraries(tvr_client tvrClientKit tvrClient tvrCommon tvrConnection)
+target_link_libraries(tvr_client tvrClientKit tvrClient tvrCommon tvrConnection boost_thread)
 
 add_executable(tvr_server tvr_server.cpp)
 target_include_directories(tvr_server PUBLIC $<BUILD_INTERFACE:${HEADER_BASE}>)

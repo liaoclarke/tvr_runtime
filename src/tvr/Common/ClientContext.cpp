@@ -15,7 +15,7 @@ namespace tvr {
     namespace common {
         void deleteContext(ClientContext *ctx) {
             auto del = ctx->getDeleter();
-            (*del)(ctx);           
+            //(*del)(ctx);           
         }
     }
 }
