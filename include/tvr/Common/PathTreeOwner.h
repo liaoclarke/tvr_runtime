@@ -39,11 +39,11 @@ namespace common {
         /// created.
         ///
         /// @sa tvr::common::PathTreeObserver
-        tvr_COMMON_EXPORT PathTreeObserverPtr makeObserver();
+        TVR_COMMON_EXPORT PathTreeObserverPtr makeObserver();
 
         /// @brief Replace the entirety of the path tree from the given
         /// serialized array of nodes.
-        tvr_COMMON_EXPORT void replaceTree(Json::Value const &nodes);
+        TVR_COMMON_EXPORT void replaceTree(Json::Value const &nodes);
 
         /// @brief Access the path tree object itself
         PathTree &get() { return m_tree; }

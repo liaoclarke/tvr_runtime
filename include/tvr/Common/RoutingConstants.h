@@ -16,11 +16,11 @@ namespace common {
     /// @ingroup Routing
     /// @{
     /// @brief Gets the path separator character - a slash.
-    OSVR_COMMON_EXPORT char getPathSeparatorCharacter();
+    TVR_COMMON_EXPORT char getPathSeparatorCharacter();
 
     /// @brief Gets the path separator - a slash - as a null-terminated
     /// string.
-    OSVR_COMMON_EXPORT const char *getPathSeparator();
+    TVR_COMMON_EXPORT const char *getPathSeparator();
     /// @}
 }
 }

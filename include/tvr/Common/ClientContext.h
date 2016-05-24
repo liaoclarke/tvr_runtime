@@ -1,7 +1,12 @@
 #ifndef INC_Common_ClientContext_h
 #define INC_Common_ClientContext_h
-#include <tvr/Common/ClientInterfacePtr.h>
-#include <tvr/Common/ClientInterfaceFactory.h>
+//#include <tvr/Common/ClientInterfacePtr.h>
+//#include <tvr/Common/ClientInterfaceFactory.h>
+#include <tvr/Common/Export.h>
+#include <tvr/Common/PathTree_fwd.h>
+#include <tvr/Common/ClientContext_fwd.h>
+#include <tvr/Util/UniquePtr.h>
+#include <tvr/Util/SharedPtr.h>
 
 #include <boost/noncopyable.hpp>
 #include <boost/any.hpp>
@@ -12,19 +17,19 @@
 
 struct TVR_ClientContextObject : boost::noncopyable {
     public:
-        typedef std::vector<tvr::common::ClienterInterfacePtr> InterfaceList;
+        //typedef std::vector<tvr::common::ClienterInterfacePtr> InterfaceList;
 
         TVR_COMMON_EXPORT virtual ~TVR_ClientContextObject();
 
         TVR_COMMON_EXPORT void update();
 
-        TVR_COMMON_EXPORT const &getAppId() const;
+        TVR_COMMON_EXPORT std::string const &getAppId() const;
 
-        TVR_COMMON_EXPORT tvr::common::ClientInterfacePtr getInterface(const char path[]);
+        //TVR_COMMON_EXPORT tvr::common::ClientInterfacePtr getInterface(const char path[]);
 
-        TVR_COMMON_EXPORT tvr::comomn::ClientInterfacePtr releaseInterface(tvr::common::ClientInterface *iface);
+        //TVR_COMMON_EXPORT tvr::comomn::ClientInterfacePtr releaseInterface(tvr::common::ClientInterface *iface);
 
-        InterfaceList const &getInterface() const { return m_interfaces; }
+        //InterfaceList const &getInterface() const { return m_interfaces; }
 
         TVR_COMMON_EXPORT void sendData(std::string const &data);
 
@@ -46,9 +51,10 @@ struct TVR_ClientContextObject : boost::noncopyable {
         TVR_COMMON_EXPORT TVR_ClientContextObject(const char adppId[], 
                                                   tvr::common::ClientContextDeleter del);
 
-        TVR_COMMON_EXPORT TVR_ClientContextObject(const char appId[], 
+        /*TVR_COMMON_EXPORT TVR_ClientContextObject(const char appId[], 
                                                   tvr::common::ClientInterfaceFactory const &interfaceFactory
                                                   tvr::common::ClientContextDeleter del);
+                                                  */
 
     private:
         virtual void m_update() = 0;
@@ -57,21 +63,21 @@ struct TVR_ClientContextObject : boost::noncopyable {
 
         TVR_COMMON_EXPORT virtual bool m_getStatus() const;
 
-        TVR_COMMON_EXPORT virtual void m_handleNewInterface(tvr::common::ClientInterfacePtr const &iface);
+        //TVR_COMMON_EXPORT virtual void m_handleNewInterface(tvr::common::ClientInterfacePtr const &iface);
 
-        TVR_COMMON_EXPORT virtual void m_handleReleasingInterface(tvr::common::ClientInterfacePtr const &iface);
+        //TVR_COMMON_EXPORT virtual void m_handleReleasingInterface(tvr::common::ClientInterfacePtr const &iface);
 
         TVR_COMMON_EXPORT virtual tvr::common::PathTree const &m_getPathTree() const = 0;
         
         std::string const m_appId;
 
-        InterfaceList m_interfaces;
+        //InterfaceList m_interfaces;
 
-        tvr::common::ClientInterfaceFactory m_clientInterfaceFactory;
+        //tvr::common::ClientInterfaceFactory m_clientInterfaceFactory;
 
-        tvr::util::MultipleKeyedOwnershipContainer m_ownedObjects;
+        //tvr::util::MultipleKeyedOwnershipContainer m_ownedObjects;
 
-        tvr::comon::ClientContextDeleter m_deleter;
+        tvr::common::ClientContextDeleter m_deleter;
 };
 
 namespace tvr {

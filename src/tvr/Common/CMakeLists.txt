@@ -15,12 +15,24 @@ configure_file(ConfigByteSwapping.h.cmake_in "${CMAKE_CURRENT_BINARY_DIR}/Config
 #    "${HEADER_LOCATION}/NetworkingSupport.h")
 
 set(SOURCE
+    ClientContext.cpp
     RawSenderType.cpp
     BaseDevice.cpp
     CreateDevice.cpp
     DeviceWrapper.cpp
     VrpnGenericServerObject.cpp
-    NetworkingSupport.cpp)
+    NetworkingSupport.cpp
+    AliasProcessor.cpp
+    RoutingConstants.cpp
+    RoutingKeys.cpp
+    ParseAlias.cpp
+    PathTree.cpp
+    PathNode.cpp
+    PathElementTools.cpp
+    PathElementTypes.cpp
+    PathTreeObserver.cpp
+    PathTreeOwner.cpp
+    PathTreeSerialization.cpp)
 
 tvr_add_library()
 
@@ -38,6 +50,7 @@ set_property(
 
 target_include_directories(${LIBNAME_FULL}
     PUBLIC
+    "${CMAKE_BINARY_DIR}/src"
     $<BUILD_INTERFACE:${VRPN_INCLUDE_DIR}>
     $<BUILD_INTERFACE:${Boost_INCLUDE_DIRS}>
     PRIVATE)

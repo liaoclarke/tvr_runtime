@@ -3,6 +3,6 @@
 #include <tvr/Util/APIBaseC.h>
 TVR_EXTERN_C_BEGIN
 typedef struct TVR_ClientContextObject *TVR_ClientContext;
-typedef struct TVR_ClientInterfaceObject *TVR_ClientInterface;
+//typedef struct TVR_ClientInterfaceObject *TVR_ClientInterface;
 TVR_EXTERN_C_END
 #endif

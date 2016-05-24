@@ -20,7 +20,12 @@ namespace tvr {
         }
 
         void DeviceWrapper::m_update() {
-            server_mainloop();
+            if (m_client) {
+                m_getConnection()->mainloop();
+                //client_mainloop();
+            } else {
+                server_mainloop();
+            }
         }
 
         void DeviceWrapper::triggerHardwareDetect() {

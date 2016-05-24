@@ -1,10 +1,15 @@
 #include <tvr/Common/ClientContext.h>
-#include <tvr/Common/ClientInterface.h>
+#include <tvr/Common/GetJSONStringFromTree.h>
+//#include <tvr/Common/ClientInterface.h>
 #include <tvr/Util/Verbosity.h>
 
 #include <boost/assert.hpp>
 
 #include <algorithm>
+#include <string>
+
+using ::tvr::common::ClientContextDeleter;
+using ::tvr::common::ClientContext;
 
 namespace tvr {
     namespace common {
@@ -15,19 +20,19 @@ namespace tvr {
     }
 }
 
-TVR_ClientContextObject::TVR_ClientContextObject(const char appId[],
+/*TVR_ClientContextObject::TVR_ClientContextObject(const char appId[],
                                                  tvr::common::ClientInterfaceFactory const &interfaceFactory,
                                                  tvr::common::ClientInterfaceFactory del) 
                                                 : m_appId(appId), m_clientInterfaceFactory(interfaceFactory),
                                                   m_deleter(del) {
     TVR_DEV_VERBOSE("ClientContextObject", "Client context initialized for " << m_appId);
-}
+}*/
 
-TVR_ClientContextObject::TVR_ClientContextObject(const char appId[], ClientContextDeleter del)
-                        : TVR_ClientContextObject(appId, tvr::common::getStandardClientInterfaceFactory(), del) {}
+TVR_ClientContextObject::TVR_ClientContextObject(const char appId[], ClientContextDeleter del) {}
+                        //: TVR_ClientContextObject(appId, tvr::common::getStandardClientInterfaceFactory(), del) {}
 
 TVR_ClientContextObject::~TVR_ClientContextObject() {
-    TVR_DEV_VERBOSE("ClientContextObject", "Client context shut down for " << m_app);
+    TVR_DEV_VERBOSE("ClientContextObject", "Client context shut down for " + std::string(m_appId));
 }
 
 std::string const &TVR_ClientContextObject::getAppId() const {
@@ -36,12 +41,12 @@ std::string const &TVR_ClientContextObject::getAppId() const {
 
 void TVR_ClientContextObject::update() {
     m_update();
-    for (auto const &iface : m_interfaces) {
+    /*for (auto const &iface : m_interfaces) {
         iface->update();
-    }
+    }*/
 }
 
-ClientInterfacePtr TVR_ClientContextObject::getInterface(const char path[]) {
+/*ClientInterfacePtr TVR_ClientContextObject::getInterface(const char path[]) {
     auto ret = m_clientInterfaceFactory(*this, path);
     if (!ret) {
         return ret;
@@ -49,9 +54,9 @@ ClientInterfacePtr TVR_ClientContextObject::getInterface(const char path[]) {
     m_handleNewInterface(ret);
     m_interface.push_back(ret);
     return ret;
-}
+}*/
 
-ClientInterfacePtr ClientContextObject::releaseInterface(ClientInterface *iface) {
+/*ClientInterfacePtr ClientContextObject::releaseInterface(ClientInterface *iface) {
     ClientInterfacePtr ret;
     if (!iface) {
         return ret;
@@ -69,10 +74,11 @@ ClientInterfacePtr ClientContextObject::releaseInterface(ClientInterface *iface)
         m_handleReleasingInterface(ret);
     }
     return ret;
-}
+}*/
 
 std::string TVR_ClientContextObject::getStringParameter(std::string const &path) const {
-    return getJsonStringFromTree(getPathTree(), path);
+    return getJSONStringFromTree(getPathTree(), path);
+    //return NULL;
 }
 
 tvr::common::PathTree const &TVR_ClientContextObject::getPathTree() const {
@@ -84,7 +90,8 @@ void TVR_ClientContextObject::sendData(std::string const &data) {
 }
 
 bool TVR_ClientContextObject::releaseObject(void *obj) {
-    return m_ownedObjects.release(obj);
+    return true;
+    //return m_ownedObjects.release(obj);
 }
 
 ClientContextDeleter TVR_ClientContextObject::getDeleter() const {
@@ -99,8 +106,8 @@ bool TVR_ClientContextObject::m_getStatus() const {
     return true;
 }
 
-void TVR_ClientContextObject::m_handleNewInterface(tvr::common::ClientInterfacePtr const &) {
-}
+/*void TVR_ClientContextObject::m_handleNewInterface(tvr::common::ClientInterfacePtr const &) {
+}*/
 
-void TVR_ClientContextObject::m_handleReleasingInterface(tvr::common::ClientInterface const &) {
-}
+/*void TVR_ClientContextObject::m_handleReleasingInterface(tvr::common::ClientInterface const &) {
+}*/

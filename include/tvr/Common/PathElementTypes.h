@@ -1,43 +1,10 @@
-/** @file
-    @brief Header
-
-    @date 2014
-
-    Closely related to:
-
-    - <osvr/Common/PathElementTypes_fwd.h>
-    - <osvr/Common/PathElementTools.h>
-    - <src/osvr/Common/PathElementTools.cpp>
-    - <src/osvr/Common/PathTreeSerialization.cpp>
-
-    Changes in this file may require changes in those other files.
-
-    @author
-    Sensics, Inc.
-    <http://sensics.com/osvr>
-*/
-
-// Copyright 2014 Sensics, Inc.
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-//     http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
-
-#ifndef INCLUDED_PathElementTypes_h_GUID_5CC817E5_C7CB_45AE_399D_0B0D39579374
-#define INCLUDED_PathElementTypes_h_GUID_5CC817E5_C7CB_45AE_399D_0B0D39579374
+#ifndef INC_Common_PathElementTypes_h
+#define INC_Common_PathElementTypes_h
 
 // Internal Includes
-#include <osvr/Common/Export.h>
-#include <osvr/Common/PathElementTypes_fwd.h> // IWYU pragma: export
-#include <osvr/Util/PortFlags.h>
+#include <tvr/Common/Export.h>
+#include <tvr/Common/PathElementTypes_fwd.h> // IWYU pragma: export
+#include <tvr/Util/PortFlags.h>
 
 // Library/third-party includes
 #include <boost/variant/variant.hpp>
@@ -49,15 +16,15 @@
 #include <string>
 #include <type_traits>
 
-namespace osvr {
+namespace tvr {
 namespace common {
 /// @brief Namespace for the various element types that may constitute a
 /// node in the path tree.
-#ifndef OSVR_DOXYGEN_EXTERNAL
+#ifndef TVR_DOXYGEN_EXTERNAL
 ///
 /// Note that any changes that add/remove data members should result in
 /// corresponding serialization changes in
-/// src/osvr/Common/PathTreeSerialization.cpp
+/// src/tvr/Common/PathTreeSerialization.cpp
 #endif
     namespace elements {
         /// @brief Base, using the CRTP, providing some basic functionality for
@@ -118,25 +85,25 @@ namespace common {
                           std::string const &server)
                 : m_devName(deviceName), m_server(server) {}
 
-            OSVR_COMMON_EXPORT static DeviceElement
+            TVR_COMMON_EXPORT static DeviceElement
             createVRPNDeviceElement(std::string const &deviceName,
                                     std::string const &server);
 
             /// Can also pass util::OmitAppendingPort as a special port
             /// value.
-            OSVR_COMMON_EXPORT static DeviceElement
+            TVR_COMMON_EXPORT static DeviceElement
             createDeviceElement(std::string const &deviceName,
                                 std::string const &server,
                                 int port = util::UseDefaultPort);
 
-            OSVR_COMMON_EXPORT std::string &getDeviceName();
-            OSVR_COMMON_EXPORT std::string const &getDeviceName() const;
-            OSVR_COMMON_EXPORT std::string &getServer();
-            OSVR_COMMON_EXPORT std::string const &getServer() const;
-            OSVR_COMMON_EXPORT std::string getFullDeviceName() const;
+            TVR_COMMON_EXPORT std::string &getDeviceName();
+            TVR_COMMON_EXPORT std::string const &getDeviceName() const;
+            TVR_COMMON_EXPORT std::string &getServer();
+            TVR_COMMON_EXPORT std::string const &getServer() const;
+            TVR_COMMON_EXPORT std::string getFullDeviceName() const;
 
-            OSVR_COMMON_EXPORT Json::Value &getDescriptor();
-            OSVR_COMMON_EXPORT Json::Value const &getDescriptor() const;
+            TVR_COMMON_EXPORT Json::Value &getDescriptor();
+            TVR_COMMON_EXPORT Json::Value const &getDescriptor() const;
 
             /// @brief Equality comparison operator
             bool operator==(DeviceElement const &other) const {
@@ -174,11 +141,11 @@ namespace common {
                              boost::operators<DeviceElement> {
           public:
             /// @brief Constructor with source and priority.
-            OSVR_COMMON_EXPORT
+            TVR_COMMON_EXPORT
             AliasElement(std::string const &source, AliasPriority priority);
 
             /// @brief Constructor with source.
-            OSVR_COMMON_EXPORT
+            TVR_COMMON_EXPORT
             AliasElement(std::string const &source);
 
             /// @brief default constructor
@@ -189,18 +156,18 @@ namespace common {
             /// transforms.
             /// @todo support relative paths - either here or at a different
             /// level
-            OSVR_COMMON_EXPORT void setSource(std::string const &source);
+            TVR_COMMON_EXPORT void setSource(std::string const &source);
 
             /// @brief Get the source of data for this alias
-            OSVR_COMMON_EXPORT std::string &getSource();
+            TVR_COMMON_EXPORT std::string &getSource();
             /// @overload
-            OSVR_COMMON_EXPORT std::string const &getSource() const;
+            TVR_COMMON_EXPORT std::string const &getSource() const;
 
             /// @brief Get/set whether this alias was automatically set (and
             /// thus subject to being override by explicit routing)
-            OSVR_COMMON_EXPORT AliasPriority &priority();
+            TVR_COMMON_EXPORT AliasPriority &priority();
             /// @overload
-            OSVR_COMMON_EXPORT AliasPriority priority() const;
+            TVR_COMMON_EXPORT AliasPriority priority() const;
 
             /// @brief Equality comparison operator
             bool operator==(AliasElement const &rhs) const {
@@ -217,18 +184,18 @@ namespace common {
         class StringElement : public ElementBase<StringElement> {
           public:
             /// @brief Default constructor
-            OSVR_COMMON_EXPORT
+            TVR_COMMON_EXPORT
             StringElement();
 
             /// @brief Constructor with value.
-            OSVR_COMMON_EXPORT
+            TVR_COMMON_EXPORT
             StringElement(std::string const &s);
 
             /// @brief Get/set (if non const) the stored string
-            OSVR_COMMON_EXPORT std::string &getString();
+            TVR_COMMON_EXPORT std::string &getString();
 
             /// @overload
-            OSVR_COMMON_EXPORT std::string const &getString() const;
+            TVR_COMMON_EXPORT std::string const &getString() const;
 
             /// @brief Equality comparison operator
             bool operator==(StringElement const &other) const {
@@ -266,6 +233,6 @@ namespace common {
     } // namespace elements
 
 } // namespace common
-} // namespace osvr
+} // namespace tvr
 
 #endif // INCLUDED_PathElementTypes_h_GUID_5CC817E5_C7CB_45AE_399D_0B0D39579374

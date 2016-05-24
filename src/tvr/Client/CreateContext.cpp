@@ -9,7 +9,7 @@ namespace tvr {
         tvr::common::ClientContext *createContext(const char appId[], const char host[]) {
             tvr::common::ClientContext *ret = nullptr;
             if (!appId || std::strlen(appId) == 0) {
-                TVR_DEV_VERBOSE("Could not create client context - null or empty appId provided!");
+                TVR_DEV_VERBOSE("CreateContext", "Could not create client context - null or empty appId provided!");
                 return ret;
             }
             ret = tvr::common::makeContext<PureClientContext>(appId, host);

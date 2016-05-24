@@ -4,12 +4,12 @@
 #include <tvr/Common/BaseDevicePtr.h>
 #include <tvr/Common/NetworkingSupport.h>
 #include <tvr/Client/VRPNConnectionCollection.h>
-#include <tvr/Client/RemoteHandlerFactory.h>
-#include <tvr/Client/ClientInterfaceObjectManager.h>
+//#include <tvr/Client/RemoteHandlerFactory.h>
+//#include <tvr/Client/ClientInterfaceObjectManager.h>
 
 #include <tvr/Common/PathTree.h>
 #include <tvr/Common/PathTreeOwner.h>
-#include <tvr/Client/InterfaceTree.h>
+//#include <tvr/Client/InterfaceTree.h>
 
 #include <vrpn_ConnectionPtr.h>
 #include <json/value.h>
@@ -31,13 +31,13 @@ namespace tvr {
 
                 virtual void m_sendData(std::string const &data);
 
-                void m_handleNewInterface(tvr::common::ClientInterfacePtr const &iface) override;
+                //void m_handleNewInterface(tvr::common::ClientInterfacePtr const &iface) override;
 
-                void m_handleReleasingInterface(tvr::common::ClientInterface const &iface) override;
+                //void m_handleReleasingInterface(tvr::common::ClientInterface const &iface) override;
 
                 tvr::common::PathTree const &m_getPathTree() const override;
 
-                void m_getStatus() const override;
+                bool m_getStatus() const override;
 
                 std::string m_host;
 
@@ -51,13 +51,13 @@ namespace tvr {
 
                 tvr::common::PathTreeOwner m_pathTreeOwner;
 
-                RemoteHandlerFactory m_factory;
+                //RemoteHandlerFactory m_factory;
 
                 tvr::common::NetworkingSupport m_network;
 
                 bool m_gotConnection = false;
 
-                ClientInterfaceObjectManager m_ifaceMgr;
+                //ClientInterfaceObjectManager m_ifaceMgr;
         };
     }
 }

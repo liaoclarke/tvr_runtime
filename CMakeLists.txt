@@ -66,6 +66,13 @@ message(HEADER_BASE = ${HEADER_BASE})
 message(VRPN_INCLUDE_DIR = ${VRPN_INCLUDE_DIR})
 
 # add the executable
+add_executable(tvr_client tvr_client.cpp)
+target_include_directories(tvr_client PUBLIC ${Boost_INCLUDE_DIR})
+target_link_libraries(tvr_client ${VRPN_LIBRARIES})
+target_link_libraries(tvr_client ${Boost_LIBRARIES})
+target_link_libraries(tvr_client ${JsonCpp_LIBRARY})
+target_link_libraries(tvr_client tvrClientKit tvrClient tvrCommon tvrConnection)
+
 add_executable(tvr_server tvr_server.cpp)
 target_include_directories(tvr_server PUBLIC $<BUILD_INTERFACE:${HEADER_BASE}>)
 target_include_directories(tvr_server PUBLIC $<BUILD_INTERFACE:${VRPN_INCLUDE_DIR}>)

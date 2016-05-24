@@ -6,6 +6,7 @@
 namespace tvr {
     namespace common {
         BaseDevicePtr createServerDevice(std::string const &name, vrpn_ConnectionPtr const &conn);
+        BaseDevicePtr createClientDevice(std::string const &name, vrpn_ConnectionPtr const &conn);
     }
 }
 

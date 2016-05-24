@@ -110,7 +110,7 @@ namespace common {
             case util::UseDefaultPort:
                 // explicitly specify OSVR port
                 ret.m_server = attachPortToServerIfNoneSpecified(
-                    server, util::DefaultOSVRPort);
+                    server, util::DefaultTVRPort);
                 break;
             default:
                 // explicitly specify the user's port
