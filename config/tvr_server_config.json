@@ -1,4 +1,35 @@
 {
+    "account": {
+        "administrator": {
+            "qq_id": "789",
+            "qq_pwd": "789",
+            "wx_id": "polly",
+            "wx_pwd": "789",
+            "gender": "unkown",
+            "city": "shenzhen",
+            "country": "china"
+        },
+        "player": [
+            {
+                "qq_id": "123",
+                "qq_pwd": "123",
+                "wx_id": "lilei",
+                "wx_pwd": "123",
+                "gender": "male",
+                "city": "shenzhen",
+                "country": "china"
+            },
+            {
+                "qq_id": "456",
+                "qq_pwd": "456",
+                "wx_id": "hanmeimei",
+                "wd_pwd": "456",
+                "gender": "female",
+                "city": "shenzhen",
+                "country": "china"
+            }
+        ]
+    },
     "display": {
         "hmd": {
             "device": {
@@ -46,7 +77,6 @@
             ]
         }
     },
-
     "rendermanager": {
         "directModeEnabled": true,
         "directHighPriorityEnabled": true,
@@ -66,13 +96,5 @@
             "asynchronous": false,
             "maxMSBeforeVSync": 5
         }
-    },
-
-    "accountmanager": {
-        "id": 12345,
-        "email": "12345@qq.com",
-        "cell": "123456890",
-        "wechat": "123456",
-        "qq": "123456"
     }
 }

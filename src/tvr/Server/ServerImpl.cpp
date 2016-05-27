@@ -27,11 +27,10 @@ namespace tvr {
             if (!(vrpnConn->doing_okay())) {
                 throw std::runtime_error("Could not create server - there is probably another instance of the server or a VRPN server running already.");
             }
-            m_systemDevice = tvr::common::createServerDevice("Tencent_DK0", vrpnConn);
-            //m_systemComponent = m_systemDevice->addComponent(tvr::common::SystemComponent::create());
-            //m_systemComponent->registerUpdateHandler();
-            //m_commonComponent = m_systemDevice->addComponent(tvr::common::CommonComponent::create());
-            //m_commonComponent->registerPingHandler([&] { m_queueTreeSend(); });
+            m_systemDevice = tvr::common::createServerDevice("TVR", vrpnConn);
+            m_systemComponent = m_systemDevice->addComponent(tvr::common::SystemComponent::create());
+            m_commonComponent = m_systemDevice->addComponent(tvr::common::CommonComponent::create());
+            m_commonComponent->registerPingHandler([&] { m_queueTreeSend(); });
 
             //vrpnConn->register_handler(vrpnConn->register_message_type(vrpn_got_first_connection), &ServerImpl::m_exitIdle, this);
             //vrpnConn->register_handler(vrpnConn->register_message_type(vrpn_dropped_last_connection), &ServerImpl::m_enterIdle, this);
@@ -64,8 +63,7 @@ namespace tvr {
         }
 
         void ServerImpl::setHardwareDetectOnConnection() {
-            /*m_commonComponent->registerPingHandler([&] { triggerHardwareDetect(); });            
-             */
+            m_commonComponent->registerPingHandler([&] { triggerHardwareDetect(); });            
         }
 
         void ServerImpl::triggerHardwareDetect() {
@@ -81,8 +79,17 @@ namespace tvr {
             */
         }
 
-        bool ServerImpl::addString(std::string const &key, std::string const &value) {
-            return true;
+        bool ServerImpl::addString(std::string const &path, std::string const &value) {
+            bool wasChanged = false;
+            auto newElement = tvr::common::PathElement{tvr::common::elements::StringElement{value}};
+            m_callControlled([&] {
+                    auto &node = m_tree.getNodeByPath(path);
+                    if (!(newElement == node.value())) {
+                        m_treeDirty.set();
+                        wasChanged = true;
+                        node.value() = newElement;
+                    }});
+            return wasChanged;
         }
 
         void ServerImpl::setSleepTime(int microseconds) {
@@ -119,15 +126,15 @@ namespace tvr {
             m_systemDevice->update();
             if (m_triggeredDetect) {
                 TVR_DEV_VERBOSE("ServerImpl", "trigger hardware detect");
-                m_systemDevice->triggerHardwareDetect();
+                //m_systemDevice->triggerHardwareDetect();
                 //m_ctx->triggerHardwareDetect();
                 m_triggeredDetect = false;
             }
-            //if (m_treeDirty) {
-            //    TVR_DEV_VERBOSE("ServerImpl", "json tree is dirty");
-            //    m_sendTree();
-            //    m_treeDirty.reset();
-            //}
+            if (m_treeDirty) {
+                TVR_DEV_VERBOSE("ServerImpl", "json tree is dirty");
+                m_sendTree();
+                m_treeDirty.reset();
+            }
         }
 
         bool ServerImpl::m_loop() {
@@ -136,7 +143,7 @@ namespace tvr {
             m_update();
             //shouldContinue = m_run.shouldContinue();
             if (m_currentSleepTime > 0) {
-                TVR_DEV_VERBOSE("ServerImpl", "server go sleep");
+                //TVR_DEV_VERBOSE("ServerImpl", "server go sleep");
                 tvr::util::time::microsleep(m_currentSleepTime);
             }
             return shouldContinue;
@@ -144,8 +151,8 @@ namespace tvr {
         }
 
         void ServerImpl::m_orderedDestruction() {
-            /*m_systemComponent = nullptr;
-            m_systemDevice.reset();
+            m_systemComponent = nullptr;
+            /*m_systemDevice.reset();
             m_conn.reset();
             */
         }
@@ -155,9 +162,13 @@ namespace tvr {
         }
 
         void ServerImpl::m_queueTreeSend() {
+            TVR_DEV_VERBOSE("ServerImpl", "Get incoming connection and send JsonTree");
+            m_callControlled([&] { m_treeDirty += true; });
         }
 
         void ServerImpl::m_sendTree() {
+            TVR_DEV_VERBOSE("ServerImpl", "Sending path tree to clients.");
+            m_systemComponent->sendReplacementTree(m_tree);
             /*auto config = pathTreeToJson(m_tree);
             Buffer<> buf;
             serialize(buf, msg);

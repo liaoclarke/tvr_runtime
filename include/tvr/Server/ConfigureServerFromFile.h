@@ -53,6 +53,10 @@ namespace tvr {
                 std::out << "External devices found and parsed from config file." << std:endl;
             }*/
 
+            if (srvConfig.processAccount()) {
+                std::cout << "Account descriptor found and parsed from coding file." << std::endl;
+            }
+
             if (srvConfig.processDisplay()) {
                 std::cout << "Display descriptor found and parsed from config file." << std::endl;
             } else {

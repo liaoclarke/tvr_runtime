@@ -17,8 +17,13 @@ configure_file(ConfigByteSwapping.h.cmake_in "${CMAKE_CURRENT_BINARY_DIR}/Config
 set(SOURCE
     ClientContext.cpp
     RawSenderType.cpp
+    RawMessageType.cpp
     BaseDevice.cpp
+    DeviceComponent.cpp
+    SystemComponent.cpp
+    CommonComponent.cpp
     CreateDevice.cpp
+    MessageHandler.cpp
     DeviceWrapper.cpp
     VrpnGenericServerObject.cpp
     NetworkingSupport.cpp
@@ -58,4 +63,5 @@ target_include_directories(${LIBNAME_FULL}
 target_link_libraries(${LIBNAME_FULL}
     PUBLIC
     PRIVATE
+    tvrUtil
     JsonCpp::JsonCpp)

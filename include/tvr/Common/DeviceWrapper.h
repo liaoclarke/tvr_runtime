@@ -11,14 +11,16 @@
 
 namespace tvr {
     namespace common {
-        class DeviceWrapper : public VrpnGenericServerObject, public BaseDevice {
+        class DeviceWrapper : public vrpn_BaseClass, public BaseDevice {
             public:
                 DeviceWrapper(std::string const &name, vrpn_ConnectionPtr const &conn, bool client);
                 virtual ~DeviceWrapper();
-                virtual void triggerHardwareDetect();
+                void triggerHardwareDetect();
             private:
+                shared_ptr<VrpnGenericServerObject> m_serverPtr;
                 bool m_client;
                 virtual void mainloop();
+                virtual int register_types();
                 virtual void m_update();
                 vrpn_ConnectionPtr m_conn;
         };

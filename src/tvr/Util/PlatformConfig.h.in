@@ -1,0 +1,57 @@
+#ifndef INC_Common_PlatformConfig_h
+#define INC_Common_PlatformConfig_h
+
+/** @def TVR_HAVE_STRUCT_TIMEVAL_IN_WINSOCK2_H
+    @brief Does the system have struct timeval in <winsock2.h>?
+*/
+#cmakedefine TVR_HAVE_STRUCT_TIMEVAL_IN_WINSOCK2_H
+
+/** @def TVR_HAVE_STRUCT_TIMEVAL_IN_SYS_TIME_H
+    @brief Does the system have struct timeval in <sys/time.h>?
+*/
+
+/*
+    MinGW and similar environments have both winsock and sys/time.h, so
+    we hide this define for disambiguation at the top level.
+*/
+#ifndef TVR_HAVE_STRUCT_TIMEVAL_IN_WINSOCK2_H
+#cmakedefine TVR_HAVE_STRUCT_TIMEVAL_IN_SYS_TIME_H
+#endif
+
+#if defined(TVR_HAVE_STRUCT_TIMEVAL_IN_SYS_TIME_H) ||                         \
+    defined(TVR_HAVE_STRUCT_TIMEVAL_IN_WINSOCK2_H)
+#define TVR_HAVE_STRUCT_TIMEVAL
+#endif
+
+/**
+ * Platform-specific variables.
+ *
+ * Prefer testing for specific compiler or platform features instead of relying
+ * on these variables.
+ *
+ */
+//@{
+#cmakedefine TVR_AIX
+#cmakedefine TVR_ANDROID
+#cmakedefine TVR_BSDOS
+#cmakedefine TVR_FREEBSD
+#cmakedefine TVR_HPUX
+#cmakedefine TVR_IRIX
+#cmakedefine TVR_LINUX
+#cmakedefine TVR_KFREEBSD
+#cmakedefine TVR_NETBSD
+#cmakedefine TVR_OPENBSD
+#cmakedefine TVR_OFS1
+#cmakedefine TVR_SCO_SV
+#cmakedefine TVR_UNIXWARE
+#cmakedefine TVR_XENIX
+#cmakedefine TVR_SUNOS
+#cmakedefine TVR_TRU64
+#cmakedefine TVR_ULTRIX
+#cmakedefine TVR_CYGWIN
+#cmakedefine TVR_MACOSX
+#cmakedefine TVR_WINDOWS
+//@}
+
+#endif
+

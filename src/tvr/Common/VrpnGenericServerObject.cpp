@@ -43,8 +43,8 @@ namespace tvr {
             }
         }
 
-        VrpnGenericServerObject::VrpnGenericServerObject(vrpn_ConnectionPtr const &conn) 
-            : m_connection(conn), m_doing_okay(true), m_devices(new vrpn_MainloopContainer) {
+        VrpnGenericServerObject::VrpnGenericServerObject(std::string const &name, vrpn_ConnectionPtr const &conn) 
+            : m_device(name), m_connection(conn), m_doing_okay(true), m_devices(new vrpn_MainloopContainer) {
         }
 
         VrpnGenericServerObject::~VrpnGenericServerObject() {
@@ -59,7 +59,7 @@ namespace tvr {
 
         void VrpnGenericServerObject::server_mainloop() {
             m_devices->mainloop();
-            TVR_DEV_VERBOSE("VrpnGenericServerObject", "devices mainloop");
+            //TVR_DEV_VERBOSE("VrpnGenericServerObject", "devices mainloop");
         }
 
         void VrpnGenericServerObject::close_devices() {

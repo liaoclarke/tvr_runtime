@@ -12,7 +12,7 @@ namespace tvr {
     namespace common {
         class VrpnGenericServerObject {
             public:
-                VrpnGenericServerObject(vrpn_ConnectionPtr const &conn);
+                VrpnGenericServerObject(std::string const &name, vrpn_ConnectionPtr const &conn);
                 ~VrpnGenericServerObject();
                 void init();
                 void server_mainloop();
@@ -22,6 +22,7 @@ namespace tvr {
                 void close_devices();
                 bool m_doing_okay;
                 bool setup_Tencent_DK0();
+                std::string m_device;
                 vrpn_ConnectionPtr m_connection;
                 vrpn_MainloopContainer *m_devices;
                 void VRPN_CALLBACK m_handle_poser(void* userdata, const vrpn_POSERCB p);

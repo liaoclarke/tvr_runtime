@@ -4,6 +4,8 @@
 #include <tvr/Common/BaseDevicePtr.h>
 #include <tvr/Common/NetworkingSupport.h>
 #include <tvr/Client/VRPNConnectionCollection.h>
+#include <tvr/Common/SystemComponent.h>
+#include <tvr/Common/CommonComponent.h>
 //#include <tvr/Client/RemoteHandlerFactory.h>
 //#include <tvr/Client/ClientInterfaceObjectManager.h>
 
@@ -30,6 +32,8 @@ namespace tvr {
                 virtual void m_update();
 
                 virtual void m_sendData(std::string const &data);
+                
+                void m_getPongMessage();
 
                 //void m_handleNewInterface(tvr::common::ClientInterfacePtr const &iface) override;
 
@@ -47,7 +51,8 @@ namespace tvr {
 
                 tvr::common::BaseDevicePtr m_systemDevice;
 
-                //tvr::common::SystemComponent *m_systemComponent;
+                tvr::common::SystemComponent *m_systemComponent;
+                tvr::common::CommonComponent *m_commonComponent;
 
                 tvr::common::PathTreeOwner m_pathTreeOwner;
 

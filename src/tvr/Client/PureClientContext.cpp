@@ -1,9 +1,10 @@
 #include <tvr/Client/PureClientContext.h>
-//#include <tvr/Common/SystemComponent.h>
+#include <tvr/Common/SystemComponent.h>
 #include <tvr/Common/CreateDevice.h>
-//#include <tvr/Common/PathTreeFull.h>
-//#include <tvr/Common/PathElementTools.h>
+#include <tvr/Common/PathTreeFull.h>
+#include <tvr/Common/PathElementTools.h>
 //#include <tvr/Common/ClientInterface.h>
+#include <tvr/Common/DeduplicatingFunctionWrapper.h>
 #include <tvr/Util/Verbosity.h>
 
 #include <boost/algorithm/string.hpp>
@@ -15,7 +16,7 @@
 
 namespace tvr {
     namespace client {
-        static const std::chrono::milliseconds STARTUP_CONNECT_TIMEOUT(20000); // Dead looping
+        static const std::chrono::milliseconds STARTUP_CONNECT_TIMEOUT(200); // Dead looping
         static const std::chrono::milliseconds STARTUP_TREE_TIMEOUT(1000);
         static const std::chrono::milliseconds STARTUP_LOOP_SLEEP(1);
 
@@ -32,14 +33,16 @@ namespace tvr {
             std::string sysDeviceName = std::string("TVR@") + host;
             m_mainConn = m_vrpnConns.getConnection("TVR", host);
             m_systemDevice = tvr::common::createClientDevice(sysDeviceName, m_mainConn);
-            //m_systemComponent = m_systemDevice->addComponent(tvr::common::SystemComponent::create());
-            //using DedupJsonFunction = tvr::common::DeduplicatingFunctionWrapper<Json::Value const &>;
-            /*m_systemComponent->registerReplaceTreeHandler(
+            m_systemComponent = m_systemDevice->addComponent(tvr::common::SystemComponent::create());
+            m_commonComponent = m_systemDevice->addComponent(tvr::common::CommonComponent::create());
+            m_commonComponent->registerPongHandler([&] { m_getPongMessage(); });
+            using DedupJsonFunction = tvr::common::DeduplicatingFunctionWrapper<Json::Value const &>;
+            m_systemComponent->registerReplaceTreeHandler(
                 DedupJsonFunction([&](Json::Value nodes) {
-                    TVR_DEV_VERBOSE("PureClientContext", "Replace path tree from server");
+                    //Json::Value account = nodes["account"];
+                    TVR_DEV_VERBOSE("PureClientContext", "Replace path tree from server Nodes: " << nodes.toStyledString() );
                     m_pathTreeOwner.replaceTree(nodes);
-                    });
-                    */
+                    }));
             typedef std::chrono::system_clock clock;
             auto begin = clock::now();
 
@@ -62,7 +65,7 @@ namespace tvr {
                 std::this_thread::sleep_for(STARTUP_LOOP_SLEEP);
             }
             auto timeToStartup = (clock::now() - begin);
-            TVR_DEV_VERBOSE("PureClientContext", "Connection process took"
+            TVR_DEV_VERBOSE("PureClientContext", "Connection process took "
                             << std::chrono::duration_cast<std::chrono::milliseconds>(timeToStartup).count()
                             << "ms: " << (m_gotConnection ? "have connection to server"
                                                           : "don't have connection to server"));
@@ -77,8 +80,12 @@ namespace tvr {
                 m_gotConnection = true;
             }
 
-            //m_systemDevice->update();
+            m_systemDevice->update();
             //m_ifaceMgr.updateHandlers();
+        }
+
+        void PureClientContext::m_getPongMessage() {
+            TVR_DEV_VERBOSE("PureClientContext", "Client get Pong message");
         }
 
         void PureClientContext::m_sendData(std::string const &data) {

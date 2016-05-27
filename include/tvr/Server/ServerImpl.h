@@ -4,6 +4,10 @@
 #include <tvr/Util/SharedPtr.h>
 #include <tvr/Common/BaseDevicePtr.h>
 #include <tvr/Connection/ConnectionPtr.h>
+#include <tvr/Common/SystemComponent.h>
+#include <tvr/Common/CommonComponent.h>
+#include <tvr/Common/PathTreeFull.h>
+#include <tvr/Util/Flag.h>
 
 #include <boost/noncopyable.hpp>
 #include <boost/thread.hpp>
@@ -24,7 +28,7 @@ namespace tvr {
                 void signalStop();
                 void setHardwareDetectOnConnection();
                 void triggerHardwareDetect();
-                bool addString(std::string const &key, std::string const &value);
+                bool addString(std::string const &path, std::string const &value);
                 void setSleepTime(int microseconds);
                 void update();
 
@@ -43,9 +47,10 @@ namespace tvr {
 
                 tvr::connection::ConnectionPtr m_conn;
                 tvr::common::BaseDevicePtr m_systemDevice;
-                //tvr::common::SystemComponent *m_systemComponent = nullptr;
-                //tvr::common::CommonComponent *m_commonComponent = nullptr;
-                //tvr::common::PathTree m_tree;
+                tvr::common::SystemComponent *m_systemComponent = nullptr;
+                tvr::common::CommonComponent *m_commonComponent = nullptr;
+                tvr::common::PathTree m_tree;
+                tvr::util::Flag m_treeDirty;
 
                 mutable boost::mutex m_runControl;
                 boost::thread m_thread;

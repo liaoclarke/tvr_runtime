@@ -59,6 +59,19 @@ namespace tvr {
             return false;
         }
 
+        static const char ACCOUNT_KEY[] = "account";
+        static const char ACCOUNT_PATH[] = "/account";
+        bool ConfigureServer::processAccount() {
+            bool success = false;
+            Json::Value const &account = m_data->getMember(ACCOUNT_KEY);
+            if (account.isNull()) {
+                return success;
+            }
+            std::cout << "account value: " << account.toStyledString() << std::endl;
+            success = m_server->addString(ACCOUNT_PATH, account.toStyledString());
+            return success;
+        }
+
         static const char DISPLAY_KEY[] = "display";
         static const char DISPLAY_PATH[] = "/display";
         bool ConfigureServer::processDisplay() {

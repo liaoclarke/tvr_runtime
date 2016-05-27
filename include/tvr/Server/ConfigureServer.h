@@ -20,6 +20,7 @@ namespace tvr {
                 void loadConfig(std::istream &json);
                 ServerPtr constructServer();
                 bool instantiateDrivers();
+                bool processAccount();
                 bool processExternalDevices();
                 bool processDisplay();
                 bool processRenderManagerParameters();

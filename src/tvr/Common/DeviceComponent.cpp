@@ -1,5 +1,5 @@
-#include <Common/DeviceComponent.h>
-#include <Common/BaseDevice.h>
+#include <tvr/Common/DeviceComponent.h>
+#include <tvr/Common/BaseDevice.h>
 
 #include <boost/assert.hpp>
 
@@ -16,15 +16,20 @@ namespace tvr {
             m_update();
         }
 
-        bool DeviceComponent::m_hasParent() {
+        bool DeviceComponent::m_hasParent() const {
             return nullptr != m_parent;
         }
 
-        DeviceComponent::m_registerHandler(vrpn_MESSAGEHANDLER handler, void *userdata, RawMessageType const &msgType) {
+        DeviceComponent::Parent &DeviceComponent::m_getParent() {
+            return *m_parent;
+        }
+
+        void DeviceComponent::m_registerHandler(vrpn_MESSAGEHANDLER handler, void *userdata, RawMessageType const &msgType) {
             auto h = make_shared<MessageHandler<BaseDeviceMessageHandlerTraits> >(handler, userdata, msgType);
             h->registerHandler(&m_getParent());
             m_messageHandlers.push_back(h);
         }
+
         void DeviceComponent::m_update() {}
     }
 }

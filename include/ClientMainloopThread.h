@@ -27,6 +27,7 @@
 
 // Internal Includes
 #include "ClientMainloop.h"
+#include <tvr/Util/Verbosity.h>
 
 // Library/third-party includes
 #include <boost/thread/thread.hpp>
@@ -56,16 +57,23 @@ class ClientMainloopThread : boost::noncopyable {
         }
         m_started = true;
         m_run = true;
-        m_thread = boost::thread([&] {
-            while (m_run) {
-                oneLoop();
-            }
-        });
+        m_thread = boost::thread([&] { 
+                std::cout << "ClientMainLoopThread mainloop start ..." << std::endl;
+                while (m_run) {
+                    oneLoop();
+                }
+                std::cout << "ClientMainLoopThread mainloop exit..." << std::endl;
+            });
     }
 
     void oneLoop() {
-        m_mainloop.mainloop();
-        boost::this_thread::sleep(SLEEP_TIME);
+        try {
+            std::cout << "ClientMainLoopThread mainloop run..." << std::endl;
+            m_mainloop.mainloop();
+            boost::this_thread::sleep(SLEEP_TIME);
+        } catch (std::exception &e) {
+            std::cout << "ClientMainLoopThread mainloop error: " << e.what() << std::endl;
+        }
     }
 
     template <typename T>
@@ -78,6 +86,7 @@ class ClientMainloopThread : boost::noncopyable {
     }
 
     ~ClientMainloopThread() {
+        std::cout << "ClientMainLoopThread mainloop shutdown" << std::endl;
         m_run = false;
         m_thread.join();
     }
