@@ -41,7 +41,9 @@ namespace tvr {
                 void m_orderedDestruction();
                 void m_queueTreeSend();
                 void m_sendTree();
-                bool m_inServerThead() const;
+                bool m_inServerThread() const;
+                //void m_updateData(Json::Value data);
+                //static int __stdcall m_handleUpdateData(void *userdata, vrpn_HANDLERPARAM);
                 static int __stdcall m_exitIdle(void *userdata, vrpn_HANDLERPARAM);
                 static int __stdcall m_enterIdle(void *userdata, vrpn_HANDLERPARAM);
 
@@ -81,6 +83,11 @@ namespace tvr {
                 boost::thread::id &m_id;
                 boost::thread::id m_origID;
         };
+
+        inline bool ServerImpl::m_inServerThread() const {
+            boost::unique_lock<boost::mutex> lock(m_runControl);
+            return !m_running || (boost::this_thread::get_id() == m_mainThreadId);
+        }
 
         template <typename Callable>
         inline void ServerImpl::m_callControlled(Callable f) {

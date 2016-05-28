@@ -31,9 +31,11 @@ struct TVR_ClientContextObject : boost::noncopyable {
 
         //InterfaceList const &getInterface() const { return m_interfaces; }
 
-        TVR_COMMON_EXPORT void sendData(std::string const &data);
+        TVR_COMMON_EXPORT void sendData(std::string const &tree);
 
         TVR_COMMON_EXPORT std::string getStringParameter(std::string const &path) const;
+
+        TVR_COMMON_EXPORT int setStringParameter(std::string const &path, std::string const &data) const;
 
         TVR_COMMON_EXPORT tvr::common::PathTree const &getPathTree() const;
 

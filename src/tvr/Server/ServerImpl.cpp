@@ -1,13 +1,31 @@
 #include <tvr/Server/ServerImpl.h>
 #include <tvr/Connection/Connection.h>
 #include <tvr/Common/CreateDevice.h>
+#include <tvr/Common/PathElementTypes.h>
+#include <tvr/Common/JSONHelpers.h>
+#include <tvr/Common/GetJSONStringFromTree.h>
+#include <tvr/Common/Buffer.h>
+#include <tvr/Util/MessageKeys.h>
+#include <tvr/Common/Serialization.h>
+#include <tvr/Common/JSONSerializationTags.h>
+#include <tvr/Common/PathTreeSerialization.h>
+#include <tvr/Common/PathElementSerialization.h>
+#include <tvr/Common/PathTreeFull.h>
+#include <tvr/Common/PathElementTools.h>
+#include <tvr/Common/PathNode.h>
+#include <tvr/Common/ApplyPathNodeVisitor.h>
+#include <tvr/Common/DeduplicatingFunctionWrapper.h>
+
 #include <tvr/Util/Verbosity.h>
 #include <tvr/Util/PortFlags.h>
 #include <tvr/Util/Microsleep.h>
 
 #include <vrpn_ConnectionPtr.h>
+#include <boost/variant/get.hpp>
+#include <boost/optional.hpp>
 
 #include <stdexcept>
+#include <sstream>
 #include <functional>
 
 namespace tvr {
@@ -29,6 +47,18 @@ namespace tvr {
             }
             m_systemDevice = tvr::common::createServerDevice("TVR", vrpnConn);
             m_systemComponent = m_systemDevice->addComponent(tvr::common::SystemComponent::create());
+            using DedupJsonFunction = tvr::common::DeduplicatingFunctionWrapper<Json::Value const &>;
+            m_systemComponent->registerClientDataUpdateHandler(
+              DedupJsonFunction([&](Json::Value nodes) {
+                    //Json::Value account = nodes["account"];
+                    TVR_DEV_VERBOSE("ServerImpl", "Update data from client Nodes: " << nodes.toStyledString());
+                    auto newElement = tvr::common::PathElement{tvr::common::elements::StringElement{nodes.toStyledString()}};
+                    auto &node = m_tree.getNodeByPath("/account");
+                    if (!(newElement == node.value())) {
+                        m_treeDirty.set();
+                        node.value() = newElement;
+                    }
+                    }));
             m_commonComponent = m_systemDevice->addComponent(tvr::common::CommonComponent::create());
             m_commonComponent->registerPingHandler([&] { m_queueTreeSend(); });
 
@@ -157,10 +187,6 @@ namespace tvr {
             */
         }
 
-        bool m_inServerThread() {
-            return true;
-        }
-
         void ServerImpl::m_queueTreeSend() {
             TVR_DEV_VERBOSE("ServerImpl", "Get incoming connection and send JsonTree");
             m_callControlled([&] { m_treeDirty += true; });
@@ -168,13 +194,7 @@ namespace tvr {
 
         void ServerImpl::m_sendTree() {
             TVR_DEV_VERBOSE("ServerImpl", "Sending path tree to clients.");
-            m_systemComponent->sendReplacementTree(m_tree);
-            /*auto config = pathTreeToJson(m_tree);
-            Buffer<> buf;
-            serialize(buf, msg);
-            packMessage(buf, "treeOut");
-            sendPending();
-            */
+            m_systemComponent->sendReplacementTree(m_tree);  
         }
 
         int ServerImpl::m_exitIdle(void *userdata, vrpn_HANDLERPARAM) {

@@ -67,7 +67,7 @@ namespace tvr {
             if (account.isNull()) {
                 return success;
             }
-            std::cout << "account value: " << account.toStyledString() << std::endl;
+            //std::cout << "account value: " << account.toStyledString() << std::endl;
             success = m_server->addString(ACCOUNT_PATH, account.toStyledString());
             return success;
         }
@@ -80,7 +80,7 @@ namespace tvr {
             if (display.isNull()) {
                 return success;
             }
-            std::cout << "display value: " << display.toStyledString() << std::endl;
+            //std::cout << "display value: " << display.toStyledString() << std::endl;
             success = m_server->addString(DISPLAY_PATH, display.toStyledString());
             return success;
         }
@@ -93,7 +93,7 @@ namespace tvr {
             if (renderManager.isNull()) {
                 return success; 
             }
-            std::cout << "rendermanager value: " << renderManager.toStyledString() << std::endl;
+            //std::cout << "rendermanager value: " << renderManager.toStyledString() << std::endl;
             success = m_server->addString(RENDERMANAGER_PATH, renderManager.toStyledString());
             return success;
         }

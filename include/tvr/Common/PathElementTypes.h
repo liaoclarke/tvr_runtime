@@ -197,6 +197,8 @@ namespace common {
             /// @overload
             TVR_COMMON_EXPORT std::string const &getString() const;
 
+            TVR_COMMON_EXPORT void setString(std::string const &value);
+
             /// @brief Equality comparison operator
             bool operator==(StringElement const &other) const {
                 return m_val == other.m_val;

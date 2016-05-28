@@ -4,6 +4,7 @@ set(API
     "${HEADER_LOCATION}/ContextC.h")
 
 set(SOURCE
+    ParametersC.cpp
     ContextC.cpp)
 
 tvr_add_library()

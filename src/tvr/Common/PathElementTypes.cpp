@@ -61,6 +61,8 @@ namespace common {
 
         std::string const &StringElement::getString() const { return m_val; }
 
+        void StringElement::setString(std::string const &value) { m_val = value; }
+
         /// Helper function to augment a VRPN-style server specification with a
         /// port if one isn't already specified.
         static inline std::string

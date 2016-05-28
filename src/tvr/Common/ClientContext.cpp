@@ -81,6 +81,10 @@ std::string TVR_ClientContextObject::getStringParameter(std::string const &path)
     //return NULL;
 }
 
+int TVR_ClientContextObject::setStringParameter(std::string const &path, std::string const &data) const {
+    return 0;    
+}
+
 tvr::common::PathTree const &TVR_ClientContextObject::getPathTree() const {
     return m_getPathTree();
 }

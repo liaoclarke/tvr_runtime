@@ -39,7 +39,6 @@ namespace tvr {
             using DedupJsonFunction = tvr::common::DeduplicatingFunctionWrapper<Json::Value const &>;
             m_systemComponent->registerReplaceTreeHandler(
                 DedupJsonFunction([&](Json::Value nodes) {
-                    //Json::Value account = nodes["account"];
                     TVR_DEV_VERBOSE("PureClientContext", "Replace path tree from server Nodes: " << nodes.toStyledString() );
                     m_pathTreeOwner.replaceTree(nodes);
                     }));
@@ -89,7 +88,7 @@ namespace tvr {
         }
 
         void PureClientContext::m_sendData(std::string const &data) {
-            //m_systemComponent->sendClientDataUpdate(data);
+            m_systemComponent->sendClientDataUpdate(data);
             m_update();
         }
 

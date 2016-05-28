@@ -28,7 +28,8 @@
                 "city": "shenzhen",
                 "country": "china"
             }
-        ]
+        ],
+        "test" : "foo"
     },
     "display": {
         "hmd": {

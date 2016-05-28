@@ -1,26 +1,24 @@
-#ifndef INC_ClientKit_Parameters_h
-#define INC_ClientKit_Parameters_h
-#include <tvr/ClientKit/ParametersC.h>
+#ifndef INC_ClientKit_ParametersC_h
+#define INC_ClientKit_ParametersC_h
+#include <tvr/ClientKit/Export.h>
+#include <tvr/Util/APIBaseC.h>
+#include <tvr/Util/ReturnCodesC.h>
+#include <tvr/Util/AnnotationMacrosC.h>
+#include <tvr/Util/ClientOpaqueTypesC.h>
 
-#include <boost/scoped_array.hpp>
+#include <stddef.h>
 
-#include <string>
+TVR_EXTERN_C_BEGIN
 
-namespace tvr {
-    namespace clientkit {
-        inline std::string getStringParameter(TVR_ClientContext ctx, const char path[]) {
-            size_t len;
-            tvrClientGetStringParameterlength(ctx, path, &len);
-            std::string ret;
-            if (len == 0) {
-                return ret;
-            }
-            boost::scoped_array(char) buf(new char[len]);
-            tvrClientGetStringParameter(ctx, path, buf.get, len);
-            ret.assign(buf, get());
-            return ret;
-        }
-    }
-}
+TVR_CLIENTKIT_EXPORT TVR_ReturnCode
+tvrClientGetStringParameterLength(TVR_ClientContext ctx, const char path[], size_t *len);
+
+TVR_CLIENTKIT_EXPORT TVR_ReturnCode
+tvrClientGetStringParameter(TVR_ClientContext ctx, const char path[], char *buf, size_t len);
+
+TVR_CLIENTKIT_EXPORT TVR_ReturnCode
+tvrClientSetStringParameter(TVR_ClientContext ctx, const char path[], const char buf[]);
+
+TVR_EXTERN_C_END
 
 #endif
