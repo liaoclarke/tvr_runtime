@@ -4,6 +4,7 @@
 #include <tvr/Common/JSONSerializationTags.h>
 #include <tvr/Common/Buffer.h>
 #include <tvr/Common/PathTreeSerialization.h>
+#include <tvr/Common/JSONHelpers.h>
 #include <tvr/Util/MessageKeys.h>
 
 #include <json/value.h>
@@ -80,7 +81,7 @@ namespace tvr {
 
         void SystemComponent::sendReplacementTree(PathTree &tree) {
             auto config = pathTreeToJson(tree);
-            std::cout << "tree json: " << config.toStyledString() << std::endl;
+            //std::cout << "send tree json: " << config.toStyledString() << std::endl;
             Buffer<> buf;
             messages::ReplacementTreeFromServer::MessageSerialization msg(config);
             serialize(buf, msg);
@@ -88,8 +89,9 @@ namespace tvr {
             m_getParent().sendPending();
         }
 
-        void SystemComponent::sendClientDataUpdate(std::string const &config) {
-            std::cout << "update json: " << config << std::endl;
+        void SystemComponent::sendClientDataUpdate(std::string const &data) {
+            Json::Value config = tvr::common::jsonParse(data);
+            //std::cout << "send update json: " << config.toStyledString() << std::endl;
             Buffer<> buf;
             messages::ClientDataToServer::MessageSerialization msg(config);
             serialize(buf, msg);
@@ -98,7 +100,7 @@ namespace tvr {
 
         int SystemComponent::m_handleReplaceTree(void *userdata, vrpn_HANDLERPARAM p) {
             auto self = static_cast<SystemComponent *>(userdata);
-            std::cout << "replace tree: " << std::string(p.buffer, p.payload_len) << std::endl;
+            //std::cout << "handle replace tree: " << std::string(p.buffer, p.payload_len) << std::endl;
             auto bufReader = readExternalBuffer(p.buffer, p.payload_len);
             messages::ReplacementTreeFromServer::MessageSerialization msg;
             deserialize(bufReader, msg);
@@ -113,7 +115,7 @@ namespace tvr {
         int SystemComponent::m_handleUpdateData(void *userdata, vrpn_HANDLERPARAM p) {
             auto self = static_cast<SystemComponent *>(userdata);
             auto bufReader = readExternalBuffer(p.buffer, p.payload_len);
-            std::cout << "update data: " << std::string(p.buffer, p.payload_len) << std::endl;
+            //std::cout << "handle update data: " << std::string(p.buffer, p.payload_len) << std::endl;
             messages::ClientDataToServer::MessageSerialization msg;
             deserialize(bufReader, msg);
             auto timestamp = tvr::util::time::fromStructTimeval(p.msg_time);
